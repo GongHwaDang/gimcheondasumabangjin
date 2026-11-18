@@ -1,0 +1,3151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⭐ 김천다수 마방진 (합 26 빙고 대전)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js for 3D Welcome Intro (#/welcome -> #/login) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- PeerJS & MQTT WebSocket for No-Database 4-Digit Code P2P Online 1:1 -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      background: #F4F5F7;
+      color: #22252A;
+      overflow-x: hidden;
+    }
+
+    /* =====================================================================
+       1. Adobe Spectrum UI & Authentic Wooden Hexagram Board Aesthetics
+       ===================================================================== */
+    .wood-board {
+      background-color: #f3e5cf;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(160, 118, 72, 0.04) 0px,
+          rgba(160, 118, 72, 0.04) 2px,
+          transparent 2px,
+          transparent 9px
+        ),
+        linear-gradient(145deg, #fbf7f0 0%, #f1e3cd 55%, #e5d0b1 100%);
+      box-shadow: 0 18px 36px rgba(34, 37, 42, 0.16), 0 7px 0 #c2a882, inset 0 2px 4px rgba(255, 255, 255, 0.9);
+      border: 3.5px solid #cda77b;
+    }
+    .board-slot-printed {
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f7EFE2 72%, #e5d5bc 100%);
+      box-shadow: inset 0 3px 6px rgba(60, 40, 15, 0.25), 0 2px 4px rgba(0, 0, 0, 0.18);
+      border: 3.5px solid #18181b;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    }
+    .yellow-chip {
+      background: radial-gradient(circle at 30% 28%, #fef9c3 0%, #facc15 48%, #eab308 88%, #ca8a04 100%);
+      box-shadow: 0 4px 0 #a16207, 0 7px 12px rgba(0, 0, 0, 0.28), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+      border: 2.5px solid #b45309;
+      transform-style: preserve-3d;
+    }
+
+    /* =====================================================================
+       2. Visual Hierarchy & Dynamic Action Spotlight (Adobe Blue #1473E6)
+       ===================================================================== */
+    /* Primary CTA Button Spotlight (Roll Dice / Start Button) */
+    .cta-spotlight {
+      background: linear-gradient(135deg, #1473E6 0%, #0D66D0 100%);
+      color: #ffffff;
+      box-shadow: 0 0 0 0 rgba(20, 115, 230, 0.6), 0 8px 20px -2px rgba(13, 102, 208, 0.45);
+      animation: pulseSpotlight 1.7s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    @keyframes pulseSpotlight {
+      0% {
+        box-shadow: 0 0 0 0 rgba(20, 115, 230, 0.65), 0 8px 20px -2px rgba(13, 102, 208, 0.45);
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(20, 115, 230, 0), 0 12px 24px -2px rgba(13, 102, 208, 0.55);
+        transform: translateY(-2px) scale(1.02);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(20, 115, 230, 0), 0 8px 20px -2px rgba(13, 102, 208, 0.45);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Combination Selection Box Spotlight when phase === 'PLACE' */
+    .combo-area-spotlight {
+      background: #F0F7FF;
+      border: 2.5px solid #1473E6 !important;
+      box-shadow: 0 8px 22px -4px rgba(20, 115, 230, 0.22);
+      animation: comboAreaGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes comboAreaGlow {
+      0% { border-color: #1473E6; box-shadow: 0 4px 16px rgba(20, 115, 230, 0.16); }
+      100% { border-color: #0D66D0; box-shadow: 0 8px 24px rgba(20, 115, 230, 0.30); }
+    }
+
+    /* =====================================================================
+       1. Calm Background & Wooden Hexagram Board Aesthetics
+       ===================================================================== */
+    .wood-board {
+      background: linear-gradient(145deg, #fbf8f3 0%, #f0e5d3 58%, #e4d4bc 100%);
+      box-shadow: 0 16px 32px rgba(45, 32, 18, 0.14), 0 6px 0 #c6b091, inset 0 2px 4px rgba(255, 255, 255, 0.85);
+      border: 3px solid #d4bea0;
+    }
+    .board-slot-printed {
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f4ece0 72%, #e2d3bc 100%);
+      box-shadow: inset 0 3px 6px rgba(60, 40, 15, 0.25), 0 1px 2px rgba(255, 255, 255, 0.95);
+      border: 3px solid #292524;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    }
+    .yellow-chip {
+      background: radial-gradient(circle at 30% 28%, #fef9c3 0%, #facc15 48%, #eab308 88%, #ca8a04 100%);
+      box-shadow: 0 4px 0 #a16207, 0 7px 12px rgba(0, 0, 0, 0.28), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+      border: 2.5px solid #b45309;
+      transform-style: preserve-3d;
+    }
+
+    /* =====================================================================
+       2. Visual Hierarchy & Dynamic Action Spotlight (Focus Guide)
+       ===================================================================== */
+    /* Primary CTA Button Spotlight (Roll Dice / Start Button) */
+    .cta-spotlight {
+      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+      color: #ffffff;
+      box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.6), 0 8px 20px -2px rgba(55, 48, 163, 0.45);
+      animation: pulseSpotlight 1.7s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    @keyframes pulseSpotlight {
+      0% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.65), 0 8px 20px -2px rgba(55, 48, 163, 0.45);
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(79, 70, 229, 0), 0 12px 24px -2px rgba(55, 48, 163, 0.55);
+        transform: translateY(-2px) scale(1.02);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0), 0 8px 20px -2px rgba(55, 48, 163, 0.45);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Combination Selection Box Spotlight when phase === 'PLACE' */
+    .combo-area-spotlight {
+      background: #eef2ff;
+      border: 2.5px solid #4f46e5 !important;
+      box-shadow: 0 8px 22px -4px rgba(79, 70, 229, 0.22);
+      animation: comboAreaGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes comboAreaGlow {
+      0% { border-color: #4f46e5; box-shadow: 0 4px 16px rgba(79, 70, 229, 0.16); }
+      100% { border-color: #6366f1; box-shadow: 0 8px 24px rgba(79, 70, 229, 0.30); }
+    }
+
+    /* Bouncing Pointer Guide Badge */
+    .guide-pointer-badge {
+      animation: guideNudge 0.85s ease-in-out infinite alternate;
+    }
+    @keyframes guideNudge {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+
+    /* =====================================================================
+       3. Full Restored Rich Animations (Dice, Sequential Chips, Flip, RPS)
+       ===================================================================== */
+    /* 3D Dice Box (Never Overflows) */
+    .dice-box {
+      width: 62px;
+      height: 62px;
+      background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+      border: 2.5px solid #1e293b;
+      border-radius: 15px;
+      box-shadow: 0 5px 0 #cbd5e1, 0 8px 14px rgba(15, 23, 42, 0.14);
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
+      place-items: center;
+      flex-shrink: 0;
+      transform-style: preserve-3d;
+    }
+    .dice-pip {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background-color: #0f172a;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+    }
+    .dice-pip-one {
+      width: 14px;
+      height: 14px;
+      background-color: #dc2626;
+    }
+
+    /* Rich 650ms 3D Dice Tumbling & Landing Bounce */
+    .dice-tumble-3d {
+      animation: diceTumble3D 0.64s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    }
+    @keyframes diceTumble3D {
+      0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+      20%  { transform: translate3d(-6px, -14px, 0) rotate(-22deg) scale(1.12); }
+      40%  { transform: translate3d(7px, -6px, 0) rotate(24deg) scale(1.06); }
+      60%  { transform: translate3d(-5px, -12px, 0) rotate(-18deg) scale(1.1); }
+      80%  { transform: translate3d(4px, -4px, 0) rotate(12deg) scale(1.04); }
+      100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    }
+    .dice-land-pop {
+      animation: diceLandBounce 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes diceLandBounce {
+      0%   { transform: scale(1.26) translateY(-8px); }
+      55%  { transform: scale(0.93) translateY(2px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    /* New Chip Drop Bounce & Expanding Ring Ripple */
+    .chip-place-drop {
+      animation: chipPlaceDrop 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes chipPlaceDrop {
+      0%   { transform: translate(-50%, -50%) scale(0.25) translateY(-34px); opacity: 0.2; }
+      60%  { transform: translate(-50%, -50%) scale(1.18) translateY(2px); opacity: 1; }
+      82%  { transform: translate(-50%, -50%) scale(0.95) translateY(0); }
+      100% { transform: translate(-50%, -50%) scale(1) translateY(0); }
+    }
+
+    /* Dramatic 3D Opponent Chip Flip (0deg -> 90deg -> 180deg) */
+    .chip-flip-3d {
+      animation: chipFlip3D 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes chipFlip3D {
+      0%   { transform: translate(-50%, -50%) perspective(400px) rotateY(0deg) scale(1); }
+      45%  { transform: translate(-50%, -50%) perspective(400px) rotateY(90deg) scale(1.32); filter: brightness(1.25); }
+      55%  { transform: translate(-50%, -50%) perspective(400px) rotateY(90deg) scale(1.32); }
+      100% { transform: translate(-50%, -50%) perspective(400px) rotateY(0deg) scale(1); filter: brightness(1); }
+    }
+
+    /* Expanding Ripple Ring on Slot when Placed or Flipped */
+    .slot-ripple-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 9999px;
+      border: 3px solid #4f46e5;
+      pointer-events: none;
+      animation: slotRipple 0.65s ease-out forwards;
+    }
+    .slot-ripple-flip {
+      border-color: #f59e0b;
+    }
+    @keyframes slotRipple {
+      0%   { transform: scale(0.85); opacity: 0.95; }
+      100% { transform: scale(1.55); opacity: 0; }
+    }
+
+    /* Bingo Winning Chip Celebration Bounce */
+    .bingo-chip-celebrate {
+      animation: bingoChipCelebrate 0.9s ease-in-out infinite alternate;
+    }
+    @keyframes bingoChipCelebrate {
+      0%   { transform: translate(-50%, -50%) scale(1) translateY(0); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+      100% { transform: translate(-50%, -50%) scale(1.13) translateY(-5px); box-shadow: 0 0 18px 5px rgba(245, 158, 11, 0.75); }
+    }
+
+    /* RPS Hand Rhythmic Bounce */
+    .rps-hand-bounce {
+      animation: rpsHandBounce 0.31s ease-in-out infinite alternate;
+    }
+    @keyframes rpsHandBounce {
+      0%   { transform: translateY(4px) rotate(-6deg) scale(0.97); }
+      100% { transform: translateY(-18px) rotate(10deg) scale(1.1); }
+    }
+
+    /* Input Validation Shake */
+    .input-error-shake {
+      animation: errorShake 0.4s ease-in-out;
+      border-color: #e11d48 !important;
+      background-color: #fff1f2 !important;
+    }
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-7px); }
+      40%, 80% { transform: translateX(7px); }
+    }
+
+    .num-underline {
+      text-decoration: underline;
+      text-decoration-thickness: 2.5px;
+      text-underline-offset: 2px;
+    }
+
+    /* Single-line Non-wrapping Line Status Pill Badge */
+    .line-badge {
+      white-space: nowrap !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+    }
+  </style>
+</head>
+<body class="h-[100dvh] max-h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-center p-1.5 sm:p-3">
+
+  <!-- ===================================================================== -->
+  <!-- STEP 1 & 2: Fullscreen Unobstructed Three.js 3D Intro & Login Gate    -->
+  <!-- ===================================================================== -->
+  <div id="introPortalOverlay" class="fixed inset-0 z-50 bg-[#14171D] flex flex-col items-center justify-between overflow-hidden select-none">
+    <!-- Interactive 3D Three.js Canvas (100% Unobstructed in Center on #/welcome) -->
+    <canvas id="threeIntroCanvas" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+
+    <!-- Sleek Top Header Bar (Does NOT block the 3D scene in the center) -->
+    <div class="relative z-10 w-full max-w-5xl px-4 sm:px-6 pt-4 sm:pt-6 flex items-center justify-start gap-2 pointer-events-none">
+      <div class="flex items-center gap-3 bg-[#1E222B]/85 border border-white/15 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-lg">
+        <span class="text-2xl">⭐</span>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#12805C] animate-ping"></span>
+            <span class="text-[11px] font-extrabold text-amber-300 tracking-wide whitespace-nowrap">김천다수초등학교 마방진 대회 공식 연습 프로그램</span>
+          </div>
+          <h1 class="text-lg sm:text-2xl font-black text-white tracking-tight leading-none mt-0.5 whitespace-nowrap">
+            김천다수 마방진 <span class="text-xs sm:text-sm font-bold text-slate-300">(육각별 합 26 빙고 대전)</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Stage: Empty on #/welcome so 3D Board, Falling Dice & Hand are 100% visible! Shows Login Card on #/login -->
+    <div class="relative z-10 w-full max-w-lg px-4 my-auto flex flex-col items-center pointer-events-none">
+      <!-- VIEW 2: #/login Student Identification Gate (Hidden until Start clicked) -->
+      <div id="loginGateCard" class="hidden pointer-events-auto w-full bg-white/95 backdrop-blur-xl border-2 border-slate-200 rounded-3xl p-5 sm:p-7 shadow-2xl flex-col gap-4 transition-all duration-500">
+        <div class="flex items-center justify-between gap-2 border-b border-slate-200 pb-3">
+          <div class="min-w-0">
+            <span class="inline-block text-[11px] font-black px-2.5 py-0.5 rounded-full bg-[#E6F0FF] text-[#1473E6] whitespace-nowrap">STEP 2 · 참가 학생 등록</span>
+            <h2 class="text-lg sm:text-xl font-black text-[#22252A] mt-1 whitespace-nowrap">👋 학년·반·닉네임 입력</h2>
+          </div>
+          <button id="btnBackToWelcome" type="button" class="shrink-0 whitespace-nowrap text-xs font-bold text-slate-600 hover:text-slate-900 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+            ⬅️ 3D 화면 보기
+          </button>
+        </div>
+
+        <p class="text-[11px] sm:text-xs font-bold text-slate-600 whitespace-nowrap tracking-tight">
+          학년, 반, 닉네임을 모두 입력해야 마방진 게임 대기실로 입장할 수 있습니다.
+        </p>
+
+        <!-- Grade & Class Row -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1.5">
+            <label for="loginGrade" class="text-xs font-black text-slate-700">🏫 학년 선택 <span class="text-[#D7373F]">*</span></label>
+            <select id="loginGrade" class="w-full px-3.5 py-3 rounded-2xl bg-slate-50 border-2 border-slate-300 focus:border-[#1473E6] focus:bg-white font-black text-sm text-slate-900 outline-none transition cursor-pointer">
+              <option value="">학년 선택</option>
+              <option value="1">1학년</option>
+              <option value="2">2학년</option>
+              <option value="3">3학년</option>
+              <option value="4">4학년</option>
+              <option value="5">5학년</option>
+              <option value="6">6학년</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="loginClass" class="text-xs font-black text-slate-700">🚪 반 입력 <span class="text-[#D7373F]">*</span></label>
+            <div class="relative flex items-center">
+              <input id="loginClass" type="number" min="1" max="20" inputmode="numeric" placeholder="예: 3" class="w-full pl-3.5 pr-8 py-3 rounded-2xl bg-slate-50 border-2 border-slate-300 focus:border-[#1473E6] focus:bg-white font-black text-sm text-slate-900 outline-none transition" />
+              <span class="absolute right-3.5 text-xs font-black text-slate-500 pointer-events-none">반</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nickname Input -->
+        <div class="flex flex-col gap-1.5">
+          <label for="loginNickname" class="text-xs font-black text-slate-700">👤 이름 또는 닉네임 <span class="text-[#D7373F]">*</span></label>
+          <input id="loginNickname" type="text" maxlength="10" placeholder="예: 김다수" class="w-full px-3.5 py-3 rounded-2xl bg-slate-50 border-2 border-slate-300 focus:border-[#1473E6] focus:bg-white font-black text-sm text-slate-900 outline-none transition" />
+        </div>
+
+        <!-- Validation Error Message -->
+        <div id="loginErrorMsg" class="hidden text-xs font-black text-[#D7373F] bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 text-center">
+          ⚠️ 학년, 반, 닉네임을 빠짐없이 입력해 주세요!
+        </div>
+
+        <!-- Primary Login Submit Button -->
+        <button id="btnSubmitLogin" type="button" class="cta-spotlight w-full py-4 rounded-2xl font-black text-base shadow-lg transition cursor-pointer flex items-center justify-center gap-2 mt-1">
+          <span>게임 입장하기 ➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Floating Dock on #/welcome (Leaves Center 3D Scene Completely Unobstructed) -->
+    <div id="welcomeHeroCard" class="relative z-10 w-full max-w-3xl px-4 pb-5 sm:pb-7 flex flex-col items-center gap-2.5">
+      <div class="w-full bg-[#1E222B]/85 backdrop-blur-xl border border-white/15 rounded-3xl p-3.5 sm:p-4 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="text-center sm:text-left px-2 min-w-0">
+          <div class="text-xs sm:text-sm font-black text-white whitespace-nowrap">
+            🖱️ 마우스나 손가락으로 3D 마방진 보드판을 돌려볼 수 있어요!
+          </div>
+          <div class="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5 whitespace-nowrap">
+            주사위 2개의 눈을 모아·갈라 칩을 놓고 합이 <strong class="text-amber-300">26</strong>인 한 줄을 먼저 완성하세요.
+          </div>
+        </div>
+        <button id="btnWelcomeStart" type="button" class="cta-spotlight w-full sm:w-auto shrink-0 whitespace-nowrap py-3.5 px-7 rounded-2xl font-black text-base sm:text-lg tracking-tight flex items-center justify-center gap-2 cursor-pointer transition active:scale-95">
+          <span>🚀 게임 시작하기 ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas for 26 Bingo Victory Celebration -->
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-40 hidden"></canvas>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-[#22252A] text-white font-black text-xs sm:text-sm shadow-xl"></div>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN GAME CONTAINER (100dvh Responsive One-Screen Fit - Zero Scroll)  -->
+  <!-- ===================================================================== -->
+  <div id="gameAppWrapper" class="w-full max-w-4xl h-full max-h-full bg-white rounded-3xl shadow-xl border border-slate-200/90 p-2.5 sm:p-4 flex flex-col justify-between gap-1.5 sm:gap-2 overflow-hidden">
+
+    <!-- 1. Top Header (Row 1: Badges + Top-Right '📖 규칙' Button | Row 2: Single-Line Action Bar) -->
+    <div class="shrink-0 flex flex-col gap-1.5 border-b border-slate-200 pb-2">
+      <!-- Top Row: Profile/Mode Badges on Left, '📖 규칙' Button Pinned at Top-Right -->
+      <div class="flex items-center justify-between gap-2">
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+            <span id="studentProfileBadge" class="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-[#22252A] text-white whitespace-nowrap">
+              🎓 학생 대기 중
+            </span>
+            <span id="modeHeaderBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#F4F5F7] text-[#22252A] border border-slate-300 whitespace-nowrap">
+              🤖 AI 싱글 대전
+            </span>
+            <span id="roomCodeHeaderBadge" class="hidden text-[11px] font-black px-2.5 py-0.5 rounded-full bg-[#E6F0FF] text-[#1473E6] border border-[#B3D4FF] whitespace-nowrap">
+              방 번호: ----
+            </span>
+            <button id="btnForceSync" type="button" class="hidden text-[11px] font-black px-2.5 py-0.5 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-800 transition cursor-pointer whitespace-nowrap">
+              ⚡ 턴 동기화
+            </button>
+          </div>
+          <h1 class="text-base sm:text-xl font-black text-[#22252A] tracking-tight leading-tight whitespace-nowrap">
+            ⭐ 김천다수 마방진 <span class="text-slate-500 text-xs sm:text-sm font-extrabold">(합 26 빙고 대전)</span>
+          </h1>
+        </div>
+
+        <!-- '📖 규칙' Button Strictly Positioned at Top-Right -->
+        <button id="btnRules" type="button" class="shrink-0 whitespace-nowrap text-xs font-extrabold px-3 py-1.5 rounded-xl bg-[#F4F5F7] hover:bg-slate-200 text-[#22252A] border border-slate-300 transition cursor-pointer flex items-center gap-1 shadow-2xs">
+          <span>📖 규칙</span>
+        </button>
+      </div>
+
+      <!-- Second Row: Strictly Single-Line Control Bar (Never wraps onto 2 lines) -->
+      <div class="flex items-center justify-between gap-1.5 flex-nowrap overflow-x-auto">
+        <div class="inline-flex items-center gap-1.5 bg-[#E6F0FF] border-2 border-[#1473E6]/40 rounded-xl px-2 py-0.5 shrink-0">
+          <label for="selInputMode" class="text-[11px] font-black text-[#0D66D0] whitespace-nowrap">입력 방식</label>
+          <select id="selInputMode" class="font-black text-xs bg-white border border-[#1473E6]/30 rounded-lg px-2 py-0.5 text-[#22252A] outline-none focus:border-[#1473E6] cursor-pointer">
+            <option value="auto" selected>💡 조합 버튼 추천 (초보용)</option>
+            <option value="manual">✍️ 보드판 직접 클릭 (대회 실전용)</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 flex-nowrap shrink-0">
+          <button id="btnOpenModeModal" type="button" class="whitespace-nowrap text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-[#F4F5F7] hover:bg-slate-200 text-[#22252A] border border-slate-300 transition cursor-pointer">
+            🎮 모드 변경
+          </button>
+          <button id="btnOpenDifficulty" type="button" class="whitespace-nowrap text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-[#F4F5F7] hover:bg-slate-200 text-[#22252A] border border-slate-300 transition cursor-pointer">
+            🎯 난이도
+          </button>
+          <button id="btnRps" type="button" class="whitespace-nowrap text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-[#F4F5F7] hover:bg-slate-200 text-[#22252A] border border-slate-300 transition cursor-pointer">
+            ✌️ 선공 정하기
+          </button>
+          <button id="btnSoundToggle" type="button" class="whitespace-nowrap text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-[#F4F5F7] hover:bg-slate-200 text-[#22252A] border border-slate-300 transition cursor-pointer">
+            🔊 효과음 켜짐
+          </button>
+        </div>
+      </div>
+
+      <!-- Hidden Internal State Holders to Prevent Null Errors -->
+      <div class="hidden" aria-hidden="true">
+        <select id="selDifficulty">
+          <option value="easy">🌱 초급 (입문)</option>
+          <option value="medium" selected>🌿 중급 (실력)</option>
+          <option value="hard">🌳 고급 (고수)</option>
+          <option value="master">🔥 가장 어려움 (마스터)</option>
+        </select>
+        <select id="selPlayerColor">
+          <option value="red" selected>🔴 빨강 숫자 칩</option>
+          <option value="blue">🔵 파랑 숫자 칩</option>
+        </select>
+        <select id="selFirstTurn">
+          <option value="red" selected>🙋 내가 먼저 (선공)</option>
+          <option value="blue">🤖 상대가 먼저 (후공)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 2. Score & Turn Status Bar -->
+    <div class="shrink-0 flex items-center justify-between gap-2 bg-slate-50 px-3 py-1.5 rounded-2xl border border-slate-200/80">
+      <div id="badgeRed" class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-xl border-2 border-slate-800 bg-white font-bold text-xs text-slate-900 transition whitespace-nowrap">
+        <span id="labelRed">🔴 나 (빨강)</span>
+        <span id="countRedChips" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-black text-xs">0개</span>
+        <span id="clockRed" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-black text-xs tabular-nums">⏱ 5:00</span>
+      </div>
+
+      <label class="flex items-center gap-1.5 text-xs font-extrabold text-slate-600 cursor-pointer select-none whitespace-nowrap">
+        <input id="chkLineStatus" type="checkbox" checked class="w-4 h-4 accent-slate-800 rounded cursor-pointer" />
+        <span>줄별 빙고 현황</span>
+      </label>
+
+      <div id="badgeBlue" class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-xl border-2 border-transparent bg-slate-100 font-bold text-xs text-slate-500 transition whitespace-nowrap">
+        <span id="labelBlue">🔵 AI (파랑)</span>
+        <span id="countBlueChips" class="px-2 py-0.5 rounded-full bg-white text-slate-700 font-black text-xs">0개</span>
+        <span id="clockBlue" class="px-2 py-0.5 rounded-full bg-white text-slate-700 font-black text-xs tabular-nums">⏱ 5:00</span>
+      </div>
+    </div>
+
+    <!-- 4. Status Banner -->
+    <div id="statusBanner" class="shrink-0 w-full py-1.5 px-3 rounded-xl text-center font-extrabold text-xs sm:text-sm bg-slate-100 text-slate-800 border border-slate-200 transition-all truncate">
+      🙋 내 차례입니다! [🎲 주사위 굴리기] 버튼을 눌러 주사위 2개를 던져보세요!
+    </div>
+
+    <!-- 5. Dice & Action Panel (Compact shrink-0 for One-Screen Tablet Fit) -->
+    <div class="shrink-0 bg-slate-50/90 border border-slate-200 rounded-2xl p-2 sm:p-3 flex flex-col gap-2">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <!-- 3x3 Grid Dice Boxes -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <div id="die1" class="dice-box" style="width:52px;height:52px;padding:6px;" aria-label="첫 번째 주사위"></div>
+          <span class="text-base font-black text-slate-400 select-none">+</span>
+          <div id="die2" class="dice-box" style="width:52px;height:52px;padding:6px;" aria-label="두 번째 주사위"></div>
+
+          <div class="flex flex-col ml-1">
+            <span class="text-[10px] font-bold text-slate-500">주사위 눈의 합</span>
+            <span id="diceSumText" class="text-sm sm:text-lg font-black text-slate-900 tracking-tight whitespace-nowrap">굴리기 전</span>
+          </div>
+        </div>
+
+        <!-- Right side of dice row: ONLY Roll Button (and Pass button if no moves exist) -->
+        <div class="flex flex-col items-end gap-0.5 ml-auto">
+          <span id="rollGuideBadge" class="guide-pointer-badge text-[10px] font-black text-[#0D66D0] bg-[#E6F0FF] px-2 py-0.5 rounded-full border border-[#B3D4FF] whitespace-nowrap">
+            👇 지금 눌러서 굴리세요!
+          </span>
+          <div class="flex items-center gap-2">
+            <button id="btnRollDice" type="button" class="cta-spotlight px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-xs sm:text-sm transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
+              <span>🎲 주사위 굴리기</span>
+            </button>
+            <button id="btnPassTurn" type="button" class="hidden px-3.5 py-2 rounded-2xl bg-[#D7373F] hover:bg-[#B82830] text-white font-black text-xs shadow-md transition cursor-pointer whitespace-nowrap">
+              ⏭️ 패스 (놓을 수 없음)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Below Dice Row: Combination Selection Box (Spotlights when phase === 'PLACE') -->
+      <div id="comboSpotlightWrapper" class="border border-slate-200 bg-white rounded-xl p-2 sm:p-2.5 flex flex-col gap-1.5 transition-all">
+        <div id="comboGuideHeader" class="hidden items-center justify-between">
+          <span class="text-[11px] font-black text-[#0D66D0] flex items-center gap-1">
+            <span>✨ STEP 2:</span>
+            <span id="comboGuideText">아래 추천 조합 버튼 중 하나를 클릭해 보드판에 칩을 놓으세요!</span>
+          </span>
+        </div>
+
+        <div id="comboContainer" class="flex flex-wrap items-center gap-1.5 min-h-[28px] max-h-[68px] overflow-y-auto">
+          <span class="text-xs text-slate-400 font-medium">주사위를 굴리면 수 모으기·가르기 조합을 선택할 수 있습니다.</span>
+        </div>
+
+        <!-- Tournament Mode Direct Selection Controls -->
+        <div id="manualControlsRow" class="hidden flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-200">
+          <span id="manualSumInfo" class="text-xs font-extrabold text-[#22252A]">보드판에서 숫자를 직접 클릭해 선택하세요.</span>
+          <div class="flex items-center gap-2 ml-auto">
+            <button id="btnResetManual" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer">
+              ↩️ 선택 초기화
+            </button>
+            <button id="btnConfirmManual" type="button" class="px-3.5 py-1.5 rounded-xl bg-[#1473E6] hover:bg-[#0D66D0] text-white font-black text-xs shadow-sm transition cursor-pointer">
+              ✅ 선택한 숫자 놓기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Auto-Scaling Square Hexagram Wooden Board (Fits Remaining Vertical/Horizontal Space Without Scrolling) -->
+    <div class="flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden py-0.5">
+      <div class="wood-board relative h-full w-auto max-w-full max-h-full aspect-square rounded-3xl p-2.5 sm:p-4 select-none overflow-hidden">
+        <div class="absolute top-3 left-3.5 text-[11px] sm:text-xs font-black text-amber-950/80 pointer-events-none whitespace-nowrap">
+          ★ 한 줄(4칸)의 숫자 합 = 26
+        </div>
+        <div class="absolute top-3 right-3.5 text-[11px] sm:text-xs font-extrabold text-amber-950/80 pointer-events-none whitespace-nowrap">
+          상대 칩 뒤집기 가능
+        </div>
+
+        <!-- Hardcoded Permanent Thick Black Connecting Lines + Dynamic Bingo Highlight Layer -->
+        <svg id="boardSvg" viewBox="0 0 100 100" class="w-full h-full pointer-events-none">
+          <g id="boardBingoLines"></g>
+          <g id="boardPermanentBlackLines" stroke="#18181b" stroke-width="2.5" stroke-linecap="round">
+            <!-- Line 0: 12 - 1 - 5 - 8 -->
+            <line x1="16.0" y1="29.0" x2="84.0" y2="29.0" />
+            <!-- Line 1: 11 - 7 - 6 - 2 -->
+            <line x1="16.0" y1="71.0" x2="84.0" y2="71.0" />
+            <!-- Line 2: 10 - 1 - 4 - 11 -->
+            <line x1="50.0" y1="9.0"  x2="16.0" y2="71.0" />
+            <!-- Line 3: 10 - 5 - 9 - 2 -->
+            <line x1="50.0" y1="9.0"  x2="84.0" y2="71.0" />
+            <!-- Line 4: 12 - 4 - 7 - 3 -->
+            <line x1="16.0" y1="29.0" x2="50.0" y2="91.0" />
+            <!-- Line 5: 8 - 9 - 6 - 3 -->
+            <line x1="84.0" y1="29.0" x2="50.0" y2="91.0" />
+          </g>
+        </svg>
+        <div id="lineHintsLayer" class="absolute inset-0 pointer-events-none"></div>
+        <div id="nodesLayer" class="absolute inset-0"></div>
+      </div>
+    </div>
+
+    <!-- 7. Bottom Controls (Safely Below Wooden Board, shrink-0) -->
+    <div class="shrink-0 flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200">
+      <span id="lastMoveBanner" class="text-[11px] sm:text-xs font-bold text-slate-500 truncate">
+        💡 팁: 상대방의 칩이 놓인 숫자도 가르기·모으기로 덮어써서 내 칩으로 뒤집을 수 있어요!
+      </span>
+      <div class="flex items-center gap-1.5 ml-auto shrink-0">
+        <button id="btnEditProfile" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition cursor-pointer whitespace-nowrap">
+          🪪 학년·이름 변경
+        </button>
+        <button id="btnNewGame" type="button" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 border border-slate-300 font-extrabold text-xs transition cursor-pointer flex items-center gap-1 whitespace-nowrap">
+          <span>🔄 새 게임 (판 초기화)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- Unified Hub Modal (Mode Select / Online Lobby / RPS / AI Difficulty)  -->
+  <!-- ===================================================================== -->
+  <div id="hubModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4 z-40">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 flex flex-col items-center gap-4 text-center relative max-h-[94vh] overflow-y-auto">
+      <button id="btnCloseHubModal" type="button" class="absolute top-4 right-4 text-xs font-bold text-slate-500 hover:text-slate-800 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 transition cursor-pointer">
+        닫기 ✕
+      </button>
+
+      <!-- View 1: Mode Selection -->
+      <div id="viewModeSelect" class="w-full flex flex-col items-center gap-4">
+        <div class="mt-1">
+          <span id="modalStudentBadge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-800">
+            ⭐ 김천다수 마방진
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+            🎮 대전 방식을 선택하세요
+          </h2>
+        </div>
+
+        <div class="flex flex-col gap-2.5 w-full text-left">
+          <button id="cardModeAI" type="button" class="group p-4 rounded-2xl border-2 border-indigo-600 bg-indigo-50/60 hover:bg-indigo-600 transition-all flex items-center justify-between gap-3 shadow-sm cursor-pointer text-left">
+            <div class="flex flex-col gap-0.5">
+              <div class="flex items-center gap-2">
+                <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">
+                  🤖 혼자 연습하기 (AI 대전)
+                </span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-indigo-600 text-white group-hover:bg-white group-hover:text-indigo-700">추천</span>
+              </div>
+              <span class="text-xs font-bold text-slate-600 group-hover:text-indigo-100">
+                가위바위보 선공 결정 후 초급·중급·고급·🔥마스터 AI와 대결!
+              </span>
+            </div>
+            <span class="text-2xl text-indigo-600 group-hover:text-white group-hover:translate-x-1 transition-transform">➔</span>
+          </button>
+
+          <button id="cardModeOnline" type="button" class="group p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-800 hover:border-slate-800 transition-all flex items-center justify-between gap-3 cursor-pointer text-left">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">
+                🌐 각자 기기로 대결 (온라인 1:1)
+              </span>
+              <span class="text-xs font-bold text-slate-500 group-hover:text-slate-300">
+                파이어베이스 없이 4자리 방 번호만으로 친구 기기와 즉시 연결!
+              </span>
+            </div>
+            <span class="text-2xl text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-transform">➔</span>
+          </button>
+
+          <button id="cardModeLocal2P" type="button" class="group p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-slate-800 hover:border-slate-800 transition-all flex items-center justify-between gap-3 cursor-pointer text-left">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">
+                👥 한 기기로 둘이서 (짝꿍 대전)
+              </span>
+              <span class="text-xs font-bold text-slate-500 group-hover:text-slate-300">
+                하나의 태블릿·PC로 친구와 번갈아 주사위를 굴리며 대결!
+              </span>
+            </div>
+            <span class="text-2xl text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-transform">➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- View 2: 4-Digit Room Code Online P2P Lobby -->
+      <div id="viewOnlineLobby" class="hidden w-full flex-col items-center gap-4 text-left">
+        <div class="text-center mt-1">
+          <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+            🌐 무서버 P2P 실시간 1:1 연동 (방장=🔴빨강 / 참가자=🔵파랑)
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+            4자리 방 번호로 친구와 연결
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5 font-medium">
+            한 명이 방을 만들고, 다른 친구가 4자리 번호를 입력하면 즉시 가위바위보로 넘어갑니다!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+          <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200 flex flex-col justify-between gap-3">
+            <div>
+              <span class="text-xs font-black text-slate-700 bg-slate-200 px-2.5 py-0.5 rounded-full">방법 1 · 방장 (🔴빨강)</span>
+              <h3 class="text-base font-black text-slate-900 mt-2">🏠 4자리 방 만들기</h3>
+              <p class="text-xs text-slate-500 mt-1">방 번호 4자리를 생성하여 친구에게 알려줍니다.</p>
+            </div>
+            <button id="btnCreateRoom" type="button" class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-black text-sm shadow-sm transition cursor-pointer">
+              🏠 4자리 방 만들기
+            </button>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-indigo-50/60 border-2 border-indigo-200 flex flex-col justify-between gap-3">
+            <div>
+              <span class="text-xs font-black text-indigo-900 bg-indigo-200/80 px-2.5 py-0.5 rounded-full">방법 2 · 참가자 (🔵파랑)</span>
+              <h3 class="text-base font-black text-indigo-950 mt-2">🚀 방 번호 입력해 입장</h3>
+              <input id="inpJoinCode" type="text" inputmode="numeric" maxlength="4" placeholder="4자리 번호" class="w-full mt-2 px-3 py-2 rounded-xl bg-white border-2 border-indigo-300 font-black text-center text-base tracking-widest text-indigo-950 outline-none focus:border-indigo-600" />
+            </div>
+            <button id="btnJoinRoom" type="button" class="cta-spotlight w-full py-3 rounded-xl font-black text-sm shadow-sm transition cursor-pointer">
+              🚀 방 입장하기
+            </button>
+          </div>
+        </div>
+
+        <div id="lobbyStatusBox" class="hidden w-full p-4 rounded-2xl bg-slate-900 text-white flex-col items-center text-center gap-2.5">
+          <span class="text-xs font-bold text-emerald-300">🟢 방 생성 완료! 친구가 아래 번호를 입력하면 자동 시작됩니다.</span>
+          <div class="flex items-center gap-2 my-0.5">
+            <span id="lobbyRoomCodeDisplay" class="text-3xl sm:text-4xl font-black tracking-widest text-white bg-slate-800 px-4 py-1.5 rounded-2xl border border-slate-700">----</span>
+            <button id="btnCopyCode" type="button" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-black text-xs transition cursor-pointer">
+              📋 번호 복사
+            </button>
+          </div>
+          <span id="lobbySubMsg" class="text-xs text-slate-300">친구의 입장을 실시간 대기 중입니다...</span>
+          <button id="btnHostStartNow" type="button" class="w-full mt-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm transition cursor-pointer">
+            ⚡ 상대방이 입장했다면 바로 가위바위보 시작 ➔
+          </button>
+        </div>
+
+        <button id="btnBackFromLobby" type="button" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer self-center">
+          ⬅️ 모드 선택으로 돌아가기
+        </button>
+      </div>
+
+      <!-- View 3: Full Rhythmic Rock-Paper-Scissors Modal (Green = Win, Red = Lose, Blue = Next Button) -->
+      <div id="viewRps" class="hidden w-full flex-col items-center gap-4">
+        <div class="mt-1">
+          <span id="rpsSubtitleBadge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+            선공 결정전
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-[#22252A] mt-2">
+            ✌️✊🖐️ 가위바위보 선공 정하기
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5 font-bold">
+            이긴 사람이 먼저 주사위를 굴립니다!
+          </p>
+        </div>
+
+        <div id="rpsArenaBox" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300">
+          <div class="flex flex-col items-center gap-2">
+            <span id="rpsRedTag" class="text-xs font-black px-2.5 py-0.5 rounded-full bg-red-100 text-red-800">🔴 나</span>
+            <div id="rpsRedHand" class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white shadow-md border-2 border-slate-200 flex items-center justify-center text-5xl sm:text-6xl select-none">
+              ✊
+            </div>
+            <span id="rpsRedChoiceText" class="text-xs font-extrabold text-slate-700">준비</span>
+          </div>
+
+          <span class="text-lg sm:text-xl font-black text-slate-400">VS</span>
+
+          <div class="flex flex-col items-center gap-2">
+            <span id="rpsBlueTag" class="text-xs font-black px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">🔵 상대</span>
+            <div id="rpsBlueHand" class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white shadow-md border-2 border-slate-200 flex items-center justify-center text-5xl sm:text-6xl select-none">
+              ✊
+            </div>
+            <span id="rpsBlueChoiceText" class="text-xs font-extrabold text-slate-700">준비</span>
+          </div>
+        </div>
+
+        <div id="rpsResultBanner" class="w-full py-3 px-4 rounded-2xl bg-slate-100 text-[#22252A] font-black text-sm sm:text-base transition-colors duration-300">
+          아래에서 가위, 바위, 보 중 하나를 선택하세요!
+        </div>
+
+        <div id="rpsChoiceButtons" class="grid grid-cols-3 gap-2.5 w-full">
+          <button type="button" data-rps="scissors" class="rps-btn py-3.5 rounded-2xl bg-white hover:bg-[#1473E6] hover:text-white text-[#22252A] border-2 border-slate-300 hover:border-[#1473E6] shadow-xs font-black text-sm sm:text-base flex flex-col items-center gap-1 transition cursor-pointer active:scale-95">
+            <span class="text-3xl">✌️</span>
+            <span>가위</span>
+          </button>
+          <button type="button" data-rps="rock" class="rps-btn py-3.5 rounded-2xl bg-white hover:bg-[#1473E6] hover:text-white text-[#22252A] border-2 border-slate-300 hover:border-[#1473E6] shadow-xs font-black text-sm sm:text-base flex flex-col items-center gap-1 transition cursor-pointer active:scale-95">
+            <span class="text-3xl">✊</span>
+            <span>바위</span>
+          </button>
+          <button type="button" data-rps="paper" class="rps-btn py-3.5 rounded-2xl bg-white hover:bg-[#1473E6] hover:text-white text-[#22252A] border-2 border-slate-300 hover:border-[#1473E6] shadow-xs font-black text-sm sm:text-base flex flex-col items-center gap-1 transition cursor-pointer active:scale-95">
+            <span class="text-3xl">🖐️</span>
+            <span>보</span>
+          </button>
+        </div>
+
+        <button id="btnAfterRpsNext" type="button" class="hidden w-full py-3.5 rounded-2xl bg-[#1473E6] hover:bg-[#0D66D0] text-white font-black text-base shadow-lg transition cursor-pointer">
+          🎯 다음: AI 난이도 선택하기 ➔
+        </button>
+      </div>
+
+      <!-- View 4: 4-Level AI Difficulty Selection Modal -->
+      <div id="viewDifficulty" class="hidden w-full flex-col items-center gap-3.5">
+        <div class="mt-1">
+          <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+            STEP 2 · AI 난이도 선택
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">
+            🎯 대결할 AI 난이도를 골라주세요
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full text-left">
+          <button type="button" data-diff="easy" class="diff-card-btn group p-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-indigo-600 hover:border-indigo-600 transition-all flex flex-col gap-1 cursor-pointer">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">🌱 초급 (입문)</span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 group-hover:bg-white/20 group-hover:text-white">★☆☆☆</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 group-hover:text-indigo-100">가능한 숫자 조합 중 무작위로 선택하는 입문용 AI</p>
+          </button>
+
+          <button type="button" data-diff="medium" class="diff-card-btn group p-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-indigo-600 hover:border-indigo-600 transition-all flex flex-col gap-1 cursor-pointer">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">🌿 중급 (실력)</span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 group-hover:bg-white/20 group-hover:text-white">★★☆☆</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 group-hover:text-indigo-100">한 줄 완성(26) 기회를 우선 포착하고 기본 방어를 수행해요</p>
+          </button>
+
+          <button type="button" data-diff="hard" class="diff-card-btn group p-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:bg-indigo-600 hover:border-indigo-600 transition-all flex flex-col gap-1 cursor-pointer">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">🌳 고급 (고수)</span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200 text-slate-800 group-hover:bg-white/20 group-hover:text-white">★★★☆</span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 group-hover:text-indigo-100">상대 빙고 위협을 차단(칩 뒤집기)하고 교차점을 선점해요</p>
+          </button>
+
+          <button type="button" data-diff="master" class="diff-card-btn group p-3.5 rounded-2xl border-2 border-slate-300 bg-slate-100 hover:bg-indigo-600 hover:border-indigo-600 transition-all flex flex-col gap-1 cursor-pointer">
+            <div class="flex items-center justify-between w-full">
+              <span class="text-base sm:text-lg font-black text-slate-900 group-hover:text-white">🔥 가장 어려움 (마스터)</span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 group-hover:bg-white/20 group-hover:text-white">★★★★</span>
+            </div>
+            <p class="text-xs font-bold text-slate-600 group-hover:text-indigo-100">주사위 36가지 확률과 교차점·고숫자(10,11,12)를 완벽 계산!</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules Modal -->
+  <div id="rulesModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 flex flex-col gap-3.5">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+        <h2 class="text-lg sm:text-xl font-black text-slate-900">📖 ⭐ 김천다수 마방진 (합 26 빙고 대전) 규칙</h2>
+        <button id="btnCloseRules" type="button" class="text-slate-400 hover:text-slate-700 font-black text-lg px-2 cursor-pointer">✕</button>
+      </div>
+      <div class="text-xs sm:text-sm text-slate-700 space-y-2 leading-relaxed">
+        <p class="font-bold text-slate-900 bg-slate-100 p-3 rounded-xl border border-slate-200">
+          🎯 <strong>승리 조건:</strong> 육각별 보드판의 6개 직선(한 줄 4칸, 숫자 합 26) 중 <strong>어느 한 줄이라도 먼저 내 색깔 칩 4개로 모두 채우면 즉시 승리</strong>합니다!
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5">
+          <li><strong>모으기 & 가르기:</strong> 주사위 2개의 합(2~12)과 같은 숫자 1개에 놓거나(모으기), 서로 다른 2~3개의 숫자로 나누어(가르기) 동시에 칩을 놓습니다.</li>
+          <li><strong>상대 칩 뒤집기:</strong> 놓으려는 칸에 상대방 칩이 있으면 뒤집어 내 색깔 칩으로 바꿉니다! (내 칩이 이미 있는 칸은 선택 불가)</li>
+        </ul>
+      </div>
+      <button id="btnConfirmRules" type="button" class="w-full py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-sm shadow-md transition cursor-pointer">
+        확인했어요!
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 0. Realistic Three.js 3D Intro (#/welcome):
+    //    - Dice Falling & Bouncing from the Sky onto the Wooden Hexagram Board
+    //    - 3D Articulated Hand Descending to Place a Yellow Magic Square Chip
+    // =========================================================================
+    let threeScene = null;
+    let threeCamera = null;
+    let threeRenderer = null;
+    let threeBoardGroup = null;
+    let threeDiceActors = [];
+    let threeHandRig = null;
+    let threeHeldChip = null;
+    let threePlacedTargetChip = null;
+    let threeBingoGlowBar = null;
+    let threePlacementRing = null;
+    let threeAnimFrame = null;
+    let threePortalActive = true;
+    let cameraTargetPos = { x: 0, y: 11.8, z: 14.8 };
+    let cameraLookTarget = { x: 0, y: 0.2, z: 0.3 };
+    let userDragRotY = 0;
+    let userDragRotX = 0;
+    let isDraggingThree = false;
+    let prevPointer = { x: 0, y: 0 };
+
+    // Board coordinates normalized around (0,0) for 3D scene
+    const BOARD_3D_NODES = [
+      { num: 10, x: 0,     z: -4.1 },
+      { num: 12, x: -3.4,  z: -2.05 },
+      { num: 1,  x: -1.15, z: -2.05 },
+      { num: 5,  x: 1.15,  z: -2.05 },
+      { num: 8,  x: 3.4,   z: -2.05 },
+      { num: 4,  x: -2.25, z: 0 },
+      { num: 9,  x: 2.25,  z: 0 },
+      { num: 11, x: -3.4,  z: 2.05 },
+      { num: 7,  x: -1.15, z: 2.05 },
+      { num: 6,  x: 1.15,  z: 2.05 },
+      { num: 2,  x: 3.4,   z: 2.05 },
+      { num: 3,  x: 0,     z: 4.1 }
+    ];
+
+    const BOARD_3D_LINES = [
+      [1, 4], [7, 10], [0, 7], [0, 10], [1, 11], [4, 11]
+    ];
+
+    // Helper: Generate procedural canvas textures for Wood, Slots & Chips in 3D
+    function makeNumberDiscTexture(numText, bgHex, textColorHex, borderHex) {
+      const c = document.createElement('canvas');
+      c.width = 256;
+      c.height = 256;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = bgHex;
+      ctx.beginPath();
+      ctx.arc(128, 128, 122, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = borderHex;
+      ctx.stroke();
+
+      ctx.fillStyle = textColorHex;
+      ctx.font = '900 112px "Noto Sans KR", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(numText), 128, 132);
+
+      if (numText === 6 || numText === 9) {
+        ctx.fillRect(88, 192, 80, 10);
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.needsUpdate = true;
+      return tex;
+    }
+
+    function initThreeWelcomeScene() {
+      const canvas = document.getElementById('threeIntroCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      threeScene = new THREE.Scene();
+      threeScene.background = new THREE.Color(0x14171D);
+      threeScene.fog = new THREE.FogExp2(0x14171D, 0.022);
+
+      threeCamera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+      threeCamera.position.set(0, 11.8, 14.8);
+      threeCamera.lookAt(0, 0.2, 0.3);
+
+      threeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      threeRenderer.setSize(window.innerWidth, window.innerHeight);
+      threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      threeRenderer.shadowMap.enabled = true;
+
+      // Studio Warm & Rim Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.78);
+      threeScene.add(ambientLight);
+
+      const sunLight = new THREE.DirectionalLight(0xfff7ed, 1.15);
+      sunLight.position.set(7, 18, 11);
+      sunLight.castShadow = true;
+      sunLight.shadow.mapSize.width = 1024;
+      sunLight.shadow.mapSize.height = 1024;
+      threeScene.add(sunLight);
+
+      const adobeBlueRim = new THREE.PointLight(0x1473E6, 0.9, 28);
+      adobeBlueRim.position.set(-10, 7, -8);
+      threeScene.add(adobeBlueRim);
+
+      threeBoardGroup = new THREE.Group();
+      threeScene.add(threeBoardGroup);
+
+      // 1. Realistic Wooden Board Base & Beveled Oak Frame
+      const boardGeo = new THREE.BoxGeometry(10.8, 0.65, 10.8);
+      const boardMat = new THREE.MeshStandardMaterial({
+        color: 0xf1dfc5,
+        roughness: 0.42,
+        metalness: 0.04
+      });
+      const boardMesh = new THREE.Mesh(boardGeo, boardMat);
+      boardMesh.receiveShadow = true;
+      boardMesh.position.y = -0.35;
+      threeBoardGroup.add(boardMesh);
+
+      const frameGeo = new THREE.BoxGeometry(11.35, 0.55, 11.35);
+      const frameMat = new THREE.MeshStandardMaterial({
+        color: 0xc29b68,
+        roughness: 0.52
+      });
+      const frameMesh = new THREE.Mesh(frameGeo, frameMat);
+      frameMesh.position.y = -0.45;
+      threeBoardGroup.add(frameMesh);
+
+      // 2. Hexagram 6 Straight Thick Black Connecting Lines on the 3D Board
+      const lineMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.5 });
+      BOARD_3D_LINES.forEach(([startIdx, endIdx]) => {
+        const a = BOARD_3D_NODES[startIdx];
+        const b = BOARD_3D_NODES[endIdx];
+        const dx = b.x - a.x;
+        const dz = b.z - a.z;
+        const len = Math.hypot(dx, dz);
+        const angle = Math.atan2(dx, dz);
+
+        const barGeo = new THREE.BoxGeometry(0.24, 0.08, len);
+        const barMesh = new THREE.Mesh(barGeo, lineMat);
+        barMesh.position.set((a.x + b.x) / 2, 0.02, (a.z + b.z) / 2);
+        barMesh.rotation.y = angle;
+        threeBoardGroup.add(barMesh);
+      });
+
+      // Golden Bingo Highlight Bar along Top Row [12 - 1 - 5 - 8] (glows when Hand places chip 5!)
+      const bingoGlowGeo = new THREE.BoxGeometry(7.2, 0.12, 0.42);
+      const bingoGlowMat = new THREE.MeshStandardMaterial({
+        color: 0xfacc15,
+        emissive: 0xf59e0b,
+        emissiveIntensity: 0.9,
+        transparent: true,
+        opacity: 0
+      });
+      threeBingoGlowBar = new THREE.Mesh(bingoGlowGeo, bingoGlowMat);
+      threeBingoGlowBar.position.set(0, 0.04, -2.05);
+      threeBoardGroup.add(threeBingoGlowBar);
+
+      // 3. 12 Printed Number Slots + Pre-placed Chips on [12, 1, 8, 9, 6]
+      const chipSideMat = new THREE.MeshStandardMaterial({ color: 0xeab308, roughness: 0.3, metalness: 0.1 });
+      const slotSideMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.5 });
+
+      const prePlacedNodes = {
+        1: 'red',  // 12
+        2: 'red',  // 1
+        4: 'red',  // 8  (Line [12, 1, 5, 8] needs 5 to complete 26 Bingo!)
+        6: 'blue', // 9
+        9: 'blue'  // 6
+      };
+
+      BOARD_3D_NODES.forEach((node, idx) => {
+        // Printed Number Slot on Board
+        const slotTopTex = makeNumberDiscTexture(node.num, '#fdf8ee', '#18181b', '#18181b');
+        const slotMaterials = [
+          slotSideMat,
+          new THREE.MeshStandardMaterial({ map: slotTopTex, roughness: 0.4 }),
+          slotSideMat
+        ];
+        const slotGeo = new THREE.CylinderGeometry(0.68, 0.68, 0.09, 32);
+        const slotMesh = new THREE.Mesh(slotGeo, slotMaterials);
+        slotMesh.position.set(node.x, 0.03, node.z);
+        slotMesh.rotation.y = -Math.PI / 2;
+        threeBoardGroup.add(slotMesh);
+
+        // Pre-placed chips
+        if (prePlacedNodes[idx]) {
+          const isRed = prePlacedNodes[idx] === 'red';
+          const chipTex = makeNumberDiscTexture(node.num, '#facc15', isRed ? '#D7373F' : '#1473E6', '#b45309');
+          const chipMats = [
+            chipSideMat,
+            new THREE.MeshStandardMaterial({ map: chipTex, roughness: 0.28 }),
+            chipSideMat
+          ];
+          const chipMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.66, 0.66, 0.24, 32), chipMats);
+          chipMesh.castShadow = true;
+          chipMesh.position.set(node.x, 0.19, node.z);
+          chipMesh.rotation.y = -Math.PI / 2;
+          threeBoardGroup.add(chipMesh);
+        }
+      });
+
+      // Target Chip '5' (Index 3: x=1.15, z=-2.05) that the 3D Hand places into the slot
+      const targetNode = BOARD_3D_NODES[3]; // Number 5
+      const chip5Tex = makeNumberDiscTexture(5, '#facc15', '#D7373F', '#b45309');
+      const chip5Mats = [
+        chipSideMat,
+        new THREE.MeshStandardMaterial({ map: chip5Tex, roughness: 0.25 }),
+        chipSideMat
+      ];
+      threePlacedTargetChip = new THREE.Mesh(new THREE.CylinderGeometry(0.66, 0.66, 0.24, 32), chip5Mats);
+      threePlacedTargetChip.castShadow = true;
+      threePlacedTargetChip.position.set(targetNode.x, 0.19, targetNode.z);
+      threePlacedTargetChip.rotation.y = -Math.PI / 2;
+      threePlacedTargetChip.visible = false;
+      threeBoardGroup.add(threePlacedTargetChip);
+
+      // Expanding Golden Ring on Target Slot when Hand places Chip 5
+      const ringGeo = new THREE.RingGeometry(0.65, 0.92, 32);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xfacc15,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0
+      });
+      threePlacementRing = new THREE.Mesh(ringGeo, ringMat);
+      threePlacementRing.rotation.x = -Math.PI / 2;
+      threePlacementRing.position.set(targetNode.x, 0.1, targetNode.z);
+      threeBoardGroup.add(threePlacementRing);
+
+      // 4. Construct Articulated 3D Hand Holding the Yellow Magic Square Chip
+      threeHandRig = new THREE.Group();
+      const skinMat = new THREE.MeshStandardMaterial({ color: 0xffd6b8, roughness: 0.45 });
+      const cuffMat = new THREE.MeshStandardMaterial({ color: 0x1473E6, roughness: 0.4 });
+
+      // Palm
+      const palm = new THREE.Mesh(new THREE.BoxGeometry(1.35, 0.42, 1.55), skinMat);
+      palm.castShadow = true;
+      threeHandRig.add(palm);
+
+      // Forearm & Adobe Blue Cuff
+      const wrist = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.62, 1.8, 20), skinMat);
+      wrist.position.set(0, 0.45, 1.25);
+      wrist.rotation.x = Math.PI / 3;
+      threeHandRig.add(wrist);
+
+      const cuff = new THREE.Mesh(new THREE.CylinderGeometry(0.66, 0.75, 1.6, 20), cuffMat);
+      cuff.position.set(0, 1.15, 2.25);
+      cuff.rotation.x = Math.PI / 3;
+      threeHandRig.add(cuff);
+
+      // Index, Middle, Ring, Little Fingers curving down to pinch chip
+      [-0.45, -0.15, 0.15, 0.45].forEach((fx, i) => {
+        const finger = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.12, 0.95, 14), skinMat);
+        finger.position.set(fx, -0.28, -0.92);
+        finger.rotation.x = Math.PI / 2.8;
+        finger.castShadow = true;
+        threeHandRig.add(finger);
+      });
+
+      // Thumb opposing the fingers
+      const thumb = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.14, 0.85, 14), skinMat);
+      thumb.position.set(-0.72, -0.28, -0.35);
+      thumb.rotation.z = -Math.PI / 4;
+      thumb.rotation.x = Math.PI / 4;
+      threeHandRig.add(thumb);
+
+      // Held Chip '5' pinched beneath the fingers
+      threeHeldChip = new THREE.Mesh(new THREE.CylinderGeometry(0.66, 0.66, 0.24, 32), chip5Mats);
+      threeHeldChip.position.set(0, -0.58, -0.68);
+      threeHeldChip.rotation.y = -Math.PI / 2;
+      threeHeldChip.castShadow = true;
+      threeHandRig.add(threeHeldChip);
+
+      threeHandRig.position.set(targetNode.x + 2.5, 6.5, targetNode.z + 2.2);
+      threeBoardGroup.add(threeHandRig);
+
+      // 5. Construct Two Realistic 3D Dice with All 6 Faces of Pips (Fall & Bounce from Sky)
+      function createFullPipped3DDie() {
+        const dieGroup = new THREE.Group();
+        const boxGeo = new THREE.BoxGeometry(1.05, 1.05, 1.05);
+        const boxMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+        const cube = new THREE.Mesh(boxGeo, boxMat);
+        cube.castShadow = true;
+        dieGroup.add(cube);
+
+        const pipRedMat = new THREE.MeshStandardMaterial({ color: 0xD7373F });
+        const pipBlackMat = new THREE.MeshStandardMaterial({ color: 0x18181b });
+
+        // Top (+Y): 1 Red Pip
+        const p1 = new THREE.Mesh(new THREE.SphereGeometry(0.13, 14, 14), pipRedMat);
+        p1.position.set(0, 0.53, 0);
+        dieGroup.add(p1);
+
+        // Front (+Z): 4 Black Pips
+        [[-0.25, -0.25], [0.25, 0.25], [-0.25, 0.25], [0.25, -0.25]].forEach(([x, y]) => {
+          const p = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), pipBlackMat);
+          p.position.set(x, y, 0.53);
+          dieGroup.add(p);
+        });
+
+        // Right (+X): 3 Black Pips
+        [[-0.26, -0.26], [0, 0], [0.26, 0.26]].forEach(([z, y]) => {
+          const p = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), pipBlackMat);
+          p.position.set(0.53, y, z);
+          dieGroup.add(p);
+        });
+
+        // Left (-X): 2 Black Pips
+        [[-0.24, -0.24], [0.24, 0.24]].forEach(([z, y]) => {
+          const p = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), pipBlackMat);
+          p.position.set(-0.53, y, z);
+          dieGroup.add(p);
+        });
+
+        // Back (-Z): 5 Black Pips
+        [[-0.26, -0.26], [0.26, 0.26], [-0.26, 0.26], [0.26, -0.26], [0, 0]].forEach(([x, y]) => {
+          const p = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), pipBlackMat);
+          p.position.set(x, y, -0.53);
+          dieGroup.add(p);
+        });
+
+        threeBoardGroup.add(dieGroup);
+        return dieGroup;
+      }
+
+      threeDiceActors = [
+        { mesh: createFullPipped3DDie(), startX: -3.2, startZ: -0.6, endX: -0.65, endZ: 0.35, rotSpeed: { x: 8.5, y: 6.2, z: 7.4 } },
+        { mesh: createFullPipped3DDie(), startX: -2.4, startZ: 1.4,  endX: 0.72,  endZ: 0.65, rotSpeed: { x: -7.8, y: 8.1, z: -6.5 } }
+      ];
+
+      // Mouse & Touch Orbit Interaction
+      const onPointerDown = (x, y) => {
+        isDraggingThree = true;
+        prevPointer = { x, y };
+      };
+      const onPointerMove = (x, y) => {
+        if (!isDraggingThree) return;
+        const dx = x - prevPointer.x;
+        const dy = y - prevPointer.y;
+        userDragRotY += dx * 0.007;
+        userDragRotX = Math.max(-0.35, Math.min(0.45, userDragRotX + dy * 0.005));
+        prevPointer = { x, y };
+      };
+      const onPointerUp = () => { isDraggingThree = false; };
+
+      canvas.addEventListener('mousedown', e => onPointerDown(e.clientX, e.clientY));
+      window.addEventListener('mousemove', e => onPointerMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onPointerUp);
+
+      canvas.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (e.touches.length === 1) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onPointerUp);
+
+      window.addEventListener('resize', () => {
+        if (!threeRenderer || !threeCamera) return;
+        threeCamera.aspect = window.innerWidth / window.innerHeight;
+        threeCamera.updateProjectionMatrix();
+        threeRenderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      const clock = new THREE.Clock();
+      const CYCLE_DURATION = 6.5; // 6.5-second continuous cinematic loop
+
+      function animateThree() {
+        if (!threePortalActive) return;
+        threeAnimFrame = requestAnimationFrame(animateThree);
+        const elapsed = clock.getElapsedTime();
+        const phaseTime = elapsed % CYCLE_DURATION;
+
+        // Smooth camera interpolation (#/welcome -> #/login zoom)
+        threeCamera.position.x += (cameraTargetPos.x - threeCamera.position.x) * 0.05;
+        threeCamera.position.y += (cameraTargetPos.y - threeCamera.position.y) * 0.05;
+        threeCamera.position.z += (cameraTargetPos.z - threeCamera.position.z) * 0.05;
+        threeCamera.lookAt(cameraLookTarget.x, cameraLookTarget.y, cameraLookTarget.z);
+
+        // Gentle turntable rotation + user drag
+        threeBoardGroup.rotation.y = Math.sin(elapsed * 0.35) * 0.28 + userDragRotY;
+        threeBoardGroup.rotation.x = userDragRotX;
+
+        // -------------------------------------------------------------------
+        // A. Realistic Sky-Fall & Multi-Bounce Physics for the Two 3D Dice
+        //    (0.0s ~ 2.3s: Fall from sky y=10.5 and bounce 3 times on board)
+        // -------------------------------------------------------------------
+        threeDiceActors.forEach((actor, idx) => {
+          const delay = idx * 0.14;
+          const dt = Math.max(0, phaseTime - delay);
+          const groundY = 0.56;
+          let y = groundY;
+          let progress = Math.min(1, dt / 1.85);
+
+          if (dt < 0.55) {
+            // Freefall from sky
+            const n = dt / 0.55;
+            y = 10.5 - (10.5 - groundY) * (n * n);
+          } else if (dt < 1.05) {
+            // First high bounce
+            const n = (dt - 0.55) / 0.50;
+            y = groundY + Math.sin(n * Math.PI) * 3.1;
+          } else if (dt < 1.45) {
+            // Second medium bounce
+            const n = (dt - 1.05) / 0.40;
+            y = groundY + Math.sin(n * Math.PI) * 1.25;
+          } else if (dt < 1.75) {
+            // Third small settle bounce
+            const n = (dt - 1.45) / 0.30;
+            y = groundY + Math.sin(n * Math.PI) * 0.38;
+          }
+
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          actor.mesh.position.x = actor.startX + (actor.endX - actor.startX) * easeOut;
+          actor.mesh.position.z = actor.startZ + (actor.endZ - actor.startZ) * easeOut;
+          actor.mesh.position.y = y;
+
+          if (dt < 1.75) {
+            actor.mesh.rotation.x = dt * actor.rotSpeed.x;
+            actor.mesh.rotation.y = dt * actor.rotSpeed.y;
+            actor.mesh.rotation.z = dt * actor.rotSpeed.z;
+          } else {
+            // Settled flat showing clear pips
+            actor.mesh.rotation.x = 0;
+            actor.mesh.rotation.z = 0;
+          }
+        });
+
+        // -------------------------------------------------------------------
+        // B. 3D Hand Descending to Place Yellow Chip '5' into Slot (2.1s ~ 5.8s)
+        // -------------------------------------------------------------------
+        const targetX = BOARD_3D_NODES[3].x;
+        const targetZ = BOARD_3D_NODES[3].z + 0.68;
+
+        if (phaseTime < 2.1) {
+          // Hand waiting high above before dice settle
+          threeHandRig.position.set(targetX + 2.8, 7.5, targetZ + 2.5);
+          threeHandRig.rotation.x = 0.2;
+          threeHeldChip.visible = true;
+          threePlacedTargetChip.visible = false;
+          threeBingoGlowBar.material.opacity = 0;
+          threePlacementRing.material.opacity = 0;
+        } else if (phaseTime < 3.45) {
+          // Hand swoops down holding Chip '5' directly into Slot '5'
+          const p = (phaseTime - 2.1) / 1.35;
+          const ease = 1 - Math.pow(1 - p, 3);
+          threeHandRig.position.x = (targetX + 2.8) + (targetX - (targetX + 2.8)) * ease;
+          threeHandRig.position.y = 7.5 + (0.78 - 7.5) * ease;
+          threeHandRig.position.z = (targetZ + 2.5) + (targetZ - (targetZ + 2.5)) * ease;
+          threeHandRig.rotation.x = 0.2 * (1 - ease);
+          threeHeldChip.visible = true;
+          threePlacedTargetChip.visible = false;
+          threeBingoGlowBar.material.opacity = 0;
+        } else if (phaseTime < 5.6) {
+          // Chip '5' is placed in the slot! Hand releases and rises gracefully
+          const p = Math.min(1, (phaseTime - 3.45) / 1.2);
+          const ease = p * p;
+          threeHeldChip.visible = false;
+          threePlacedTargetChip.visible = true;
+
+          threeHandRig.position.x = targetX + ease * 2.2;
+          threeHandRig.position.y = 0.78 + ease * 6.8;
+          threeHandRig.position.z = targetZ + ease * 2.2;
+
+          // Golden 26 Bingo Line [12 - 1 - 5 - 8] lights up & Ring expands!
+          const ringProgress = Math.min(1, (phaseTime - 3.45) / 0.85);
+          threePlacementRing.scale.setScalar(1 + ringProgress * 1.1);
+          threePlacementRing.material.opacity = Math.max(0, 1 - ringProgress);
+          threeBingoGlowBar.material.opacity = 0.55 + Math.sin((phaseTime - 3.45) * 8) * 0.25;
+        } else {
+          // Reset fade before next loop
+          const fade = Math.max(0, 1 - (phaseTime - 5.6) / 0.9);
+          threeBingoGlowBar.material.opacity = fade * 0.5;
+          threePlacedTargetChip.visible = fade > 0.2;
+        }
+
+        threeRenderer.render(threeScene, threeCamera);
+      }
+      animateThree();
+    }
+
+    // =========================================================================
+    // 1. Realistic Sound Effects (Web Audio API + Dice Audio)
+    // =========================================================================
+    let soundEnabled = true;
+    let audioCtx = null;
+    const diceAudio = new Audio('https://actions.google.com/sounds/v1/impacts/dice_throw.ogg');
+    diceAudio.preload = 'auto';
+    diceAudio.volume = 0.8;
+
+    function getAudioCtx() {
+      if (!soundEnabled) return null;
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) audioCtx = new Ctx();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      return audioCtx;
+    }
+
+    function playTone({ freq = 440, endFreq = null, type = 'sine', duration = 0.12, delay = 0, gain = 0.15 }) {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const t = ctx.currentTime + delay;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, t);
+      if (endFreq !== null) osc.frequency.exponentialRampToValueAtTime(Math.max(20, endFreq), t + duration);
+      g.gain.setValueAtTime(0.001, t);
+      g.gain.linearRampToValueAtTime(gain, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0008, t + duration);
+      osc.connect(g);
+      g.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + duration + 0.02);
+    }
+
+    function playWoodImpact(delay = 0, intensity = 1.0) {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const t = ctx.currentTime + delay;
+      const len = Math.floor(ctx.sampleRate * 0.028);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.3));
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1400 + Math.random() * 600, t);
+      filter.Q.setValueAtTime(3.0, t);
+      const ng = ctx.createGain();
+      ng.gain.setValueAtTime(0.28 * intensity, t);
+      ng.gain.exponentialRampToValueAtTime(0.001, t + 0.026);
+      noise.connect(filter);
+      filter.connect(ng);
+      ng.connect(ctx.destination);
+      noise.start(t);
+
+      const osc = new OscillatorNode(ctx, { type: 'triangle', frequency: (260 + Math.random() * 100) * 1.4 });
+      const og = ctx.createGain();
+      osc.frequency.exponentialRampToValueAtTime(140, t + 0.032);
+      og.gain.setValueAtTime(0.18 * intensity, t);
+      og.gain.exponentialRampToValueAtTime(0.001, t + 0.034);
+      osc.connect(og);
+      og.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.036);
+    }
+
+    function playDiceRollSound() {
+      if (!soundEnabled) return;
+      try { diceAudio.currentTime = 0; diceAudio.play().catch(() => {}); } catch (e) {}
+      [0, 0.06, 0.13, 0.21, 0.30, 0.40, 0.51].forEach((d, i) => playWoodImpact(d, 1 - i * 0.11));
+    }
+
+    function playChipSound(isFlip) {
+      if (isFlip) {
+        playTone({ freq: 290, endFreq: 920, type: 'sine', duration: 0.16, delay: 0, gain: 0.2 });
+        playTone({ freq: 920, endFreq: 680, type: 'triangle', duration: 0.11, delay: 0.1, gain: 0.16 });
+      } else {
+        playWoodImpact(0, 0.85);
+        playTone({ freq: 480, endFreq: 820, type: 'triangle', duration: 0.11, delay: 0, gain: 0.18 });
+      }
+    }
+
+    function playUiClick() { playTone({ freq: 620, endFreq: 740, type: 'sine', duration: 0.05, gain: 0.1 }); }
+    function playRpsBeat(step) {
+      const freqs = [392, 440, 587.33];
+      playTone({ freq: freqs[step % 3], endFreq: freqs[step % 3] * 1.15, type: 'triangle', duration: 0.11, gain: 0.16 });
+    }
+    function playFanfare(win) {
+      if (win) {
+        [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5].forEach((n, i) =>
+          playTone({ freq: n, type: 'triangle', duration: i === 5 ? 0.36 : 0.13, delay: i * 0.11, gain: 0.21 })
+        );
+      } else {
+        [440, 392, 349.23, 293.66].forEach((n, i) =>
+          playTone({ freq: n, type: 'sawtooth', duration: 0.18, delay: i * 0.14, gain: 0.11 })
+        );
+      }
+    }
+
+    // =========================================================================
+    // 2. Victory Confetti Particle Burst
+    // =========================================================================
+    function launchVictoryConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      canvas.classList.remove('hidden');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      const colors = ['#4f46e5', '#f59e0b', '#10b981', '#ef4444', '#3b82f6', '#facc15'];
+      const particles = Array.from({ length: 95 }, () => ({
+        x: window.innerWidth * 0.5 + (Math.random() - 0.5) * 180,
+        y: window.innerHeight * 0.45,
+        vx: (Math.random() - 0.5) * 15,
+        vy: -Math.random() * 14 - 5,
+        size: 7 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI,
+        vRot: (Math.random() - 0.5) * 0.25
+      }));
+
+      let frame = 0;
+      function drawConfetti() {
+        frame++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.36;
+          p.rot += p.vRot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+          ctx.restore();
+        });
+        if (frame < 130) {
+          requestAnimationFrame(drawConfetti);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.classList.add('hidden');
+        }
+      }
+      drawConfetti();
+    }
+
+    // =========================================================================
+    // 3. Hexagram Board Coordinates & Partition Lookup (Sum = 26)
+    // =========================================================================
+    const NODES = [
+      { pos: 0,  num: 10, x: 50.0, y: 9.0  },
+      { pos: 1,  num: 12, x: 16.0, y: 29.0 },
+      { pos: 2,  num: 1,  x: 38.5, y: 29.0 },
+      { pos: 3,  num: 5,  x: 61.5, y: 29.0 },
+      { pos: 4,  num: 8,  x: 84.0, y: 29.0 },
+      { pos: 5,  num: 4,  x: 27.5, y: 50.0 },
+      { pos: 6,  num: 9,  x: 72.5, y: 50.0 },
+      { pos: 7,  num: 11, x: 16.0, y: 71.0 },
+      { pos: 8,  num: 7,  x: 38.5, y: 71.0 },
+      { pos: 9,  num: 6,  x: 61.5, y: 71.0 },
+      { pos: 10, num: 2,  x: 84.0, y: 71.0 },
+      { pos: 11, num: 3,  x: 50.0, y: 91.0 }
+    ];
+
+    const NUM_TO_POS = {};
+    NODES.forEach(n => { NUM_TO_POS[n.num] = n.pos; });
+
+    const LINES = [
+      { id: 0, cells: [1, 2, 3, 4],  hintX: 89, hintY: 20, arrow: '←' }, // [12, 1, 5, 8] upper horizontal
+      { id: 1, cells: [7, 8, 9, 10], hintX: 89, hintY: 83, arrow: '←' }, // [11, 7, 6, 2] lower horizontal
+      { id: 2, cells: [0, 2, 5, 7],  hintX: 31, hintY: 7,  arrow: '↙' }, // [10, 1, 4, 11] upper-left diagonal
+      { id: 3, cells: [0, 3, 6, 10], hintX: 69, hintY: 7,  arrow: '↘' }, // [10, 5, 9, 2] upper-right diagonal
+      { id: 4, cells: [1, 5, 8, 11], hintX: 31, hintY: 94, arrow: '↖' }, // [12, 4, 7, 3] lower-left diagonal
+      { id: 5, cells: [4, 6, 9, 11], hintX: 69, hintY: 94, arrow: '↗' }  // [8, 9, 6, 3] lower-right diagonal
+    ];
+
+    function computePartitions(target, maxParts = 3, start = 1, current = []) {
+      if (target === 0) return [current];
+      if (current.length >= maxParts) return [];
+      const res = [];
+      for (let i = start; i <= Math.min(target, 12); i++) {
+        res.push(...computePartitions(target - i, maxParts, i + 1, [...current, i]));
+      }
+      return res;
+    }
+
+    const PARTITIONS_BY_SUM = {};
+    for (let s = 2; s <= 12; s++) {
+      PARTITIONS_BY_SUM[s] = computePartitions(s, 3, 1).sort((a, b) => a.length - b.length || b[0] - a[0]);
+    }
+
+    const DICE_WEIGHTS = { 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6, 8: 5, 9: 4, 10: 3, 11: 2, 12: 1 };
+    const DIFF_LABELS = { easy: '🌱 초급', medium: '🌿 중급', hard: '🌳 고급', master: '🔥 마스터' };
+    const DICE_PIPS = { 1: [5], 2: [1, 9], 3: [1, 5, 9], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] };
+
+    function renderDieFace(el, val) {
+      el.innerHTML = '';
+      if (!val) {
+        for (let i = 1; i <= 9; i++) {
+          const sp = document.createElement('span');
+          if (i === 5) { sp.className = 'text-lg font-black text-slate-300'; sp.textContent = '?'; }
+          el.appendChild(sp);
+        }
+        return;
+      }
+      const pips = DICE_PIPS[val] || [];
+      for (let i = 1; i <= 9; i++) {
+        const d = document.createElement('div');
+        if (pips.includes(i)) d.className = val === 1 ? 'dice-pip dice-pip-one' : 'dice-pip';
+        el.appendChild(d);
+      }
+    }
+
+    // =========================================================================
+    // 4. Student Profile & Game State
+    // =========================================================================
+    let studentProfile = {
+      loggedIn: false,
+      grade: '',
+      classNum: '',
+      nickname: '',
+      fullLabel: '학생'
+    };
+
+    let app = {
+      mode: 'ai',           // 'ai' | 'online' | 'local'
+      difficulty: 'medium', // 'easy' | 'medium' | 'hard' | 'master'
+      myColor: 'red',       // In online mode: Host is 'red', Guest is 'blue'
+      aiColor: 'blue',
+      roomCode: null,
+      connected: false,
+      redName: '나',
+      blueName: 'AI',
+      clientId: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : String(Math.random()),
+      pktSeq: 0,
+      animatingBusy: false,
+      timers: []
+    };
+
+    // Baduk-style turn clock: total time per player, deducted during own turn
+    const TURN_CLOCK_TOTAL = 300; // seconds per player
+
+    let state = {
+      status: 'PLAYING',            // 'WAITING' | 'RPS' | 'PLAYING' | 'FINISHED'
+      guestJoined: false,
+      turnOwner: 'red',             // 'red' | 'blue'
+      phase: 'ROLL',                // 'ROLL' | 'PLACE'
+      dice: [null, null],
+      board: Array(12).fill(null),  // index 0..11 -> null | 'red' | 'blue'
+      rpsHost: null,
+      rpsGuest: null,
+      winner: null,
+      winReason: null,              // 'bingo' | 'timeout'
+      clockRed: TURN_CLOCK_TOTAL,
+      clockBlue: TURN_CLOCK_TOTAL,
+      lastMove: { by: null, nums: [], passed: false, seq: 0, text: '새 게임이 시작되었습니다!' },
+      previewNums: [],
+      manualSelectedNums: new Set(),
+      newlyPlacedPos: new Set(),
+      flippedPos: new Set()
+    };
+
+    // DOM Elements
+    const toastBox = document.getElementById('toastBox');
+    const studentProfileBadge = document.getElementById('studentProfileBadge');
+    const modalStudentBadge = document.getElementById('modalStudentBadge');
+    const modeHeaderBadge = document.getElementById('modeHeaderBadge');
+    const roomCodeHeaderBadge = document.getElementById('roomCodeHeaderBadge');
+    const btnForceSync = document.getElementById('btnForceSync');
+    const selDifficulty = document.getElementById('selDifficulty');
+    const selInputMode = document.getElementById('selInputMode');
+    const selPlayerColor = document.getElementById('selPlayerColor');
+    const selFirstTurn = document.getElementById('selFirstTurn');
+    const badgeRed = document.getElementById('badgeRed');
+    const badgeBlue = document.getElementById('badgeBlue');
+    const labelRed = document.getElementById('labelRed');
+    const labelBlue = document.getElementById('labelBlue');
+    const countRedChips = document.getElementById('countRedChips');
+    const countBlueChips = document.getElementById('countBlueChips');
+    const chkLineStatus = document.getElementById('chkLineStatus');
+    const statusBanner = document.getElementById('statusBanner');
+    const die1El = document.getElementById('die1');
+    const die2El = document.getElementById('die2');
+    const diceSumText = document.getElementById('diceSumText');
+    const rollGuideBadge = document.getElementById('rollGuideBadge');
+    const btnRollDice = document.getElementById('btnRollDice');
+    const btnPassTurn = document.getElementById('btnPassTurn');
+    const comboSpotlightWrapper = document.getElementById('comboSpotlightWrapper');
+    const comboGuideHeader = document.getElementById('comboGuideHeader');
+    const comboGuideText = document.getElementById('comboGuideText');
+    const comboContainer = document.getElementById('comboContainer');
+    const manualControlsRow = document.getElementById('manualControlsRow');
+    const manualSumInfo = document.getElementById('manualSumInfo');
+    const btnConfirmManual = document.getElementById('btnConfirmManual');
+    const btnResetManual = document.getElementById('btnResetManual');
+    const boardSvg = document.getElementById('boardSvg');
+    const lineHintsLayer = document.getElementById('lineHintsLayer');
+    const nodesLayer = document.getElementById('nodesLayer');
+    const lastMoveBanner = document.getElementById('lastMoveBanner');
+    const clockRedEl = document.getElementById('clockRed');
+    const clockBlueEl = document.getElementById('clockBlue');
+
+    // =========================================================================
+    // 4.5 Baduk-Style Turn Clock (총 시간 차감 · 0초 시 자동 패배)
+    // =========================================================================
+    let clockInterval = null;
+
+    function formatClock(sec) {
+      const s = Math.max(0, Math.ceil(sec));
+      return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    }
+
+    function updateClockDisplay() {
+      if (!clockRedEl || !clockBlueEl) return;
+      const paint = (el, v) => {
+        el.textContent = `⏱ ${formatClock(v)}`;
+        el.className = `px-2 py-0.5 rounded-full font-black text-xs tabular-nums ${
+          v <= 30 ? 'bg-amber-300 text-amber-950 animate-pulse' : 'bg-slate-100 text-slate-800'
+        }`;
+      };
+      paint(clockRedEl, state.clockRed);
+      paint(clockBlueEl, state.clockBlue);
+    }
+
+    function startTurnClock() {
+      if (clockInterval) return;
+      clockInterval = setInterval(gameClockTick, 250);
+    }
+
+    function gameClockTick() {
+      // 로그인 전(인트로/대기 화면) 또는 게임 종료 후에는 시계 정지
+      if (!studentProfile.loggedIn || state.status !== 'PLAYING') return;
+      // 규칙·모드 선택·가위바위보 등 모달(창)이 열려 있으면 시계 일시 정지
+      if (!hubModal.classList.contains('hidden') || !rulesModal.classList.contains('hidden')) return;
+      const key = state.turnOwner === 'red' ? 'clockRed' : 'clockBlue';
+      state[key] = Math.max(0, state[key] - 0.25);
+      updateClockDisplay();
+      if (state[key] <= 0) handleTimeOut(state.turnOwner, false);
+    }
+
+    function handleTimeOut(loserColor, fromRemote = false) {
+      if (state.status === 'FINISHED') return;
+      const winnerColor = loserColor === 'red' ? 'blue' : 'red';
+      state.status = 'FINISHED';
+      state.winner = winnerColor;
+      state.winReason = 'timeout';
+      state.phase = 'ROLL';
+      state.dice = [null, null];
+      state.lastMove = {
+        by: loserColor,
+        nums: [],
+        passed: false,
+        seq: (state.lastMove?.seq || 0) + 1,
+        text: `⏰ ${loserColor === 'red' ? '🔴' : '🔵'}의 남은 시간이 모두 소진되어 자동 패배! ${winnerColor === 'red' ? '🔴' : '🔵'} 승리!`
+      };
+      renderAll();
+      const isPlayerVictory = app.mode === 'local' || winnerColor === app.myColor;
+      playFanfare(isPlayerVictory);
+      if (isPlayerVictory) launchVictoryConfetti();
+      showToast(`⏰ 시간 초과! ${winnerColor === 'red' ? app.redName : app.blueName} 님 승리!`);
+      if (!fromRemote && app.mode === 'online' && app.roomCode) {
+        sendP2PPacket({ type: 'TIME_OUT', loser: loserColor });
+      }
+    }
+
+    function showToast(msg) {
+      toastBox.textContent = msg;
+      toastBox.classList.remove('hidden');
+      clearTimeout(toastBox._t);
+      toastBox._t = setTimeout(() => toastBox.classList.add('hidden'), 2600);
+    }
+
+    function clearTimers() {
+      app.timers.forEach(t => clearTimeout(t));
+      app.timers = [];
+    }
+
+    function isMyTurnNow() {
+      if (state.status === 'FINISHED' || app.animatingBusy) return false;
+      if (app.mode === 'local') return true;
+      return state.turnOwner === app.myColor;
+    }
+
+    function getValidCombos(sum, color, boardArr = state.board) {
+      if (!sum) return [];
+      return (PARTITIONS_BY_SUM[sum] || []).filter(combo =>
+        combo.every(num => boardArr[NUM_TO_POS[num]] !== color)
+      );
+    }
+
+    function getWinningLines(boardArr = state.board) {
+      const wins = [];
+      LINES.forEach((line, idx) => {
+        const first = boardArr[line.cells[0]];
+        if (first && line.cells.every(pos => boardArr[pos] === first)) {
+          wins.push({ idx, color: first });
+        }
+      });
+      return wins;
+    }
+
+    // =========================================================================
+    // 5. Welcome (#/welcome) -> Login (#/login) Routing & Validation
+    // =========================================================================
+    const introPortalOverlay = document.getElementById('introPortalOverlay');
+    const welcomeHeroCard = document.getElementById('welcomeHeroCard');
+    const loginGateCard = document.getElementById('loginGateCard');
+    const loginGrade = document.getElementById('loginGrade');
+    const loginClass = document.getElementById('loginClass');
+    const loginNickname = document.getElementById('loginNickname');
+    const loginErrorMsg = document.getElementById('loginErrorMsg');
+
+    function navigateIntroRoute(hashRoute) {
+      if (hashRoute === '#/login') {
+        window.location.hash = '#/login';
+        // Smoothly zoom the 3D camera closer to the Hexagram Magic Square board
+        cameraTargetPos = { x: 0, y: 7.8, z: 9.2 };
+        cameraLookTarget = { x: 0, y: 0.2, z: 0.5 };
+        welcomeHeroCard.classList.add('hidden');
+        loginGateCard.classList.remove('hidden');
+        loginGateCard.classList.add('flex');
+        setTimeout(() => loginGrade.focus(), 120);
+      } else if (hashRoute === '#/game' && studentProfile.loggedIn) {
+        window.location.hash = '#/game';
+        threePortalActive = false;
+        if (threeAnimFrame) cancelAnimationFrame(threeAnimFrame);
+        introPortalOverlay.classList.add('hidden');
+      } else {
+        window.location.hash = '#/welcome';
+        threePortalActive = true;
+        cameraTargetPos = { x: 0, y: 12.5, z: 16.5 };
+        cameraLookTarget = { x: 0, y: 0.4, z: 0 };
+        introPortalOverlay.classList.remove('hidden');
+        welcomeHeroCard.classList.remove('hidden');
+        loginGateCard.classList.add('hidden');
+        loginGateCard.classList.remove('flex');
+      }
+    }
+
+    function flagInputError(inputEl) {
+      inputEl.classList.remove('input-error-shake');
+      void inputEl.offsetWidth;
+      inputEl.classList.add('input-error-shake');
+    }
+
+    function handleLoginSubmit() {
+      playUiClick();
+      const g = loginGrade.value.trim();
+      const c = loginClass.value.trim();
+      const n = loginNickname.value.trim();
+
+      let hasError = false;
+      if (!g) { flagInputError(loginGrade); hasError = true; }
+      if (!c || isNaN(Number(c)) || Number(c) < 1) { flagInputError(loginClass); hasError = true; }
+      if (!n) { flagInputError(loginNickname); hasError = true; }
+
+      if (hasError) {
+        loginErrorMsg.classList.remove('hidden');
+        playFanfare(false);
+        return;
+      }
+
+      loginErrorMsg.classList.add('hidden');
+      studentProfile.loggedIn = true;
+      studentProfile.grade = g;
+      studentProfile.classNum = c;
+      studentProfile.nickname = n;
+      studentProfile.fullLabel = `${g}학년 ${c}반 ${n}`;
+
+      app.redName = studentProfile.fullLabel;
+      studentProfileBadge.textContent = `🎓 ${studentProfile.fullLabel}`;
+      modalStudentBadge.textContent = `🎓 ${studentProfile.fullLabel} 님 환영합니다!`;
+
+      playFanfare(true);
+      navigateIntroRoute('#/game');
+      renderAll();
+      openHubView('mode');
+    }
+
+    // =========================================================================
+    // 6. Hybrid No-Database P2P Online 1:1 Sync (PeerJS + MQTT WSS + BroadcastChannel)
+    // =========================================================================
+    let peerInstance = null;
+    let peerConn = null;
+    let mqttClient = null;
+    let bcChannel = null;
+
+    function cleanupOnlineSync() {
+      if (peerConn) { try { peerConn.close(); } catch (e) {} peerConn = null; }
+      if (peerInstance) { try { peerInstance.destroy(); } catch (e) {} peerInstance = null; }
+      if (mqttClient) { try { mqttClient.end(true); } catch (e) {} mqttClient = null; }
+      if (bcChannel) { try { bcChannel.close(); } catch (e) {} bcChannel = null; }
+      app.connected = false;
+      app.roomCode = null;
+    }
+
+    function sendP2PPacket(packet) {
+      if (app.mode !== 'online' || !app.roomCode) return;
+      app.pktSeq += 1;
+      const msg = {
+        ...packet,
+        roomCode: String(app.roomCode),
+        senderId: app.clientId,
+        pktId: `${app.clientId}-${app.pktSeq}-${Date.now()}`,
+        seq: app.pktSeq,
+        redName: app.redName,
+        blueName: app.blueName,
+        clockRed: state.clockRed,
+        clockBlue: state.clockBlue,
+        ts: Date.now()
+      };
+
+      if (bcChannel) {
+        try { bcChannel.postMessage(msg); } catch (e) {}
+      }
+      if (peerConn && peerConn.open) {
+        try { peerConn.send(msg); } catch (e) {}
+      }
+      if (mqttClient && mqttClient.connected) {
+        try {
+          // retain:false — 늦게 들어온 기기(관전자 포함)가 오래된 메시지를 재생하는 것을 방지
+          mqttClient.publish(`gcds-p2p-2026/room_${app.roomCode}`, JSON.stringify(msg), { qos: 1 });
+        } catch (e) {}
+      }
+    }
+
+    function connectHybridP2PChannels(code, isHost) {
+      // 1) Local same-browser BroadcastChannel
+      if ('BroadcastChannel' in window) {
+        bcChannel = new BroadcastChannel(`gcds_p2p_${code}`);
+        bcChannel.onmessage = (ev) => handleIncomingP2PPacket(ev.data);
+      }
+
+      // 2) WebSocket MQTT Relay (Works across school firewalls without any DB setup)
+      if (typeof mqtt !== 'undefined') {
+        try {
+          const topic = `gcds-p2p-2026/room_${code}`;
+          mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
+            keepalive: 30,
+            clean: true,
+            connectTimeout: 3500,
+            reconnectPeriod: 1500
+          });
+          mqttClient.on('connect', () => {
+            mqttClient.subscribe(topic, { qos: 1 });
+            if (!isHost) {
+              sendP2PPacket({ type: 'GUEST_JOIN', guestName: studentProfile.fullLabel });
+            }
+          });
+          mqttClient.on('message', (t, buf) => {
+            try { handleIncomingP2PPacket(JSON.parse(buf.toString())); } catch (e) {}
+          });
+        } catch (e) {}
+      }
+
+      // 3) PeerJS Direct WebRTC DataChannel
+      if (typeof Peer !== 'undefined') {
+        try {
+          const hostPeerId = `gcds-magic-p2p-${code}`;
+          peerInstance = isHost ? new Peer(hostPeerId) : new Peer();
+          peerInstance.on('open', () => {
+            if (!isHost) {
+              const conn = peerInstance.connect(hostPeerId, { reliable: true });
+              peerConn = conn;
+              conn.on('open', () => {
+                sendP2PPacket({ type: 'GUEST_JOIN', guestName: studentProfile.fullLabel });
+              });
+              conn.on('data', (data) => handleIncomingP2PPacket(data));
+            }
+          });
+          if (isHost) {
+            peerInstance.on('connection', (conn) => {
+              peerConn = conn;
+              conn.on('data', (data) => handleIncomingP2PPacket(data));
+            });
+          }
+        } catch (e) {}
+      }
+    }
+
+    // =========================================================================
+    // 6.5 수신 신뢰성 처리: 중복 패킷 폐기 · 수 순서 보장 · 애니메이션 중 대기 큐
+    //     (같은 패킷이 3중 경로로 중복 수신되어도, 애니메이션 중에 수가 도착해도
+    //      유실되지 않고 순서대로 한 번만 적용됩니다)
+    // =========================================================================
+    const REMOTE_ACTION_TYPES = ['NEW_GAME', 'ROLL_DICE', 'PLACE_COMBO', 'PASS_TURN', 'TIME_OUT'];
+    const seenPktIds = new Set();
+    const lastSeqBySender = {};
+    let remoteActionQueue = [];
+    let flushingRemoteQueue = false;
+
+    function markPktSeen(pktId) {
+      if (seenPktIds.has(pktId)) return false;
+      seenPktIds.add(pktId);
+      if (seenPktIds.size > 500) {
+        const it = seenPktIds.values();
+        for (let i = 0; i < 250; i++) seenPktIds.delete(it.next().value);
+      }
+      return true;
+    }
+
+    function isStaleRemoteAction(msg) {
+      if (typeof msg.seq !== 'number') return false;
+      const prev = lastSeqBySender[msg.senderId];
+      if (prev != null && msg.seq <= prev) return true; // 이미 처리했거나 역행한 오래된 수
+      lastSeqBySender[msg.senderId] = msg.seq;
+      return false;
+    }
+
+    function flushRemoteQueue() {
+      if (flushingRemoteQueue) return;
+      flushingRemoteQueue = true;
+      const step = () => {
+        if (!remoteActionQueue.length) { flushingRemoteQueue = false; return; }
+        // 애니메이션(주사위·칩 배치)이 진행 중이면 끝날 때까지 대기 후 재시도
+        if (app.animatingBusy) { setTimeout(step, 120); return; }
+        // 게임이 끝난 상태에서는 새 게임 선언 외에는 폐기
+        if (state.status === 'FINISHED' && remoteActionQueue[0].type !== 'NEW_GAME') {
+          remoteActionQueue = [];
+          flushingRemoteQueue = false;
+          return;
+        }
+        const msg = remoteActionQueue.shift();
+        processRemoteAction(msg);
+        setTimeout(step, 0);
+      };
+      step();
+    }
+
+    function processRemoteAction(msg) {
+      switch (msg.type) {
+        case 'ROLL_DICE': {
+          animateDiceRollToValues(msg.d1, msg.d2, true);
+          break;
+        }
+        case 'PLACE_COMBO': {
+          if (state.status === 'PLAYING' && state.phase === 'PLACE' && !app.animatingBusy) {
+            executeSequentialComboPlacement(msg.combo, true);
+          } else {
+            // 상태가 어긋났음 → 자동으로 즉시 동기화 복구 요청
+            sendP2PPacket({ type: 'REQUEST_SYNC' });
+          }
+          break;
+        }
+        case 'PASS_TURN': {
+          if (state.status === 'PLAYING' && state.phase === 'PLACE' && !app.animatingBusy) {
+            handlePassTurn(true);
+          } else {
+            sendP2PPacket({ type: 'REQUEST_SYNC' });
+          }
+          break;
+        }
+        case 'TIME_OUT': {
+          handleTimeOut(msg.loser === 'blue' ? 'blue' : 'red', true);
+          break;
+        }
+        case 'NEW_GAME': {
+          initNewGame(msg.firstColor, true);
+          showToast('🔄 상대방이 새 게임(판 초기화)을 시작했습니다.');
+          break;
+        }
+      }
+    }
+
+    function applyStateSnapshot(msg) {
+      state.turnOwner = msg.turnOwner;
+      state.phase = msg.phase;
+      state.dice = msg.dice || [null, null];
+      state.board = msg.board || Array(12).fill(null);
+      state.status = msg.status || 'PLAYING';
+      state.winner = msg.winner || null;
+      state.winReason = msg.winReason || null;
+      if (typeof msg.clockRed === 'number') state.clockRed = msg.clockRed;
+      if (typeof msg.clockBlue === 'number') state.clockBlue = msg.clockBlue;
+      app.animatingBusy = false;
+      updateClockDisplay();
+      renderAll();
+    }
+
+    function handleIncomingP2PPacket(msg) {
+      if (!msg || String(msg.roomCode) !== String(app.roomCode)) return;
+      if (msg.senderId === app.clientId) return;
+
+      // 1) 중복 패킷 폐기 (BroadcastChannel + MQTT + WebRTC 동시 수신 대비)
+      if (msg.pktId && !markPktSeen(msg.pktId)) return;
+
+      // 2) Baduk-style clock sync: keep both devices' remaining times identical
+      if (state.status === 'PLAYING' &&
+          typeof msg.clockRed === 'number' && typeof msg.clockBlue === 'number') {
+        state.clockRed = msg.clockRed;
+        state.clockBlue = msg.clockBlue;
+        updateClockDisplay();
+      }
+
+      // 3) 경기 수 패킷: 순서 보장 후 큐에 적재 (애니메이션 끝나면 순차 적용)
+      if (REMOTE_ACTION_TYPES.includes(msg.type)) {
+        if (isStaleRemoteAction(msg)) return;
+        remoteActionQueue.push(msg);
+        flushRemoteQueue();
+        return;
+      }
+
+      if (msg.type === 'GUEST_JOIN') {
+        app.connected = true;
+        state.guestJoined = true;
+        app.blueName = msg.guestName || msg.blueName || '참가 학생';
+        sendP2PPacket({
+          type: 'HOST_WELCOME',
+          hostName: app.redName,
+          guestName: app.blueName
+        });
+        // 중간 입장(재접속) 대비: 현재 경기 상태를 즉시 한 번 더 밀어줌
+        sendP2PPacket({ type: 'STATE_SNAPSHOT', turnOwner: state.turnOwner, phase: state.phase, dice: state.dice, board: state.board, status: state.status, winner: state.winner, winReason: state.winReason, clockRed: state.clockRed, clockBlue: state.clockBlue });
+        const isLobbyOpen = !document.getElementById('hubModal').classList.contains('hidden') &&
+                            !document.getElementById('viewOnlineLobby').classList.contains('hidden');
+        if (isLobbyOpen) {
+          showToast(`🎉 [${app.blueName}] 님이 입장했습니다! 가위바위보를 시작합니다!`);
+          openHubView('rps', true);
+        }
+        renderAll();
+        return;
+      }
+
+      if (msg.type === 'HOST_WELCOME') {
+        app.connected = true;
+        state.guestJoined = true;
+        if (msg.hostName) app.redName = msg.hostName;
+        if (msg.guestName) app.blueName = msg.guestName;
+        renderAll();
+        return;
+      }
+
+      if (msg.type === 'OPEN_RPS') {
+        openHubView('rps', true);
+        return;
+      }
+
+      if (msg.type === 'RPS_PICK') {
+        if (msg.color === 'red') state.rpsHost = msg.pick;
+        if (msg.color === 'blue') state.rpsGuest = msg.pick;
+        updateOnlineRpsUI();
+        checkOnlineRpsResolution();
+        return;
+      }
+
+      if (msg.type === 'REQUEST_SYNC') {
+        sendP2PPacket({
+          type: 'STATE_SNAPSHOT',
+          turnOwner: state.turnOwner,
+          phase: state.phase,
+          dice: state.dice,
+          board: state.board,
+          status: state.status,
+          winner: state.winner,
+          winReason: state.winReason,
+          clockRed: state.clockRed,
+          clockBlue: state.clockBlue
+        });
+        return;
+      }
+
+      if (msg.type === 'STATE_SNAPSHOT') {
+        // 애니메이션 진행 중에는 깜빡임 방지를 위해 끝난 뒤 적용
+        if (app.animatingBusy) {
+          const retryApply = () => {
+            if (app.animatingBusy) { setTimeout(retryApply, 150); return; }
+            applyStateSnapshot(msg);
+          };
+          retryApply();
+        } else {
+          applyStateSnapshot(msg);
+        }
+      }
+    }
+
+    function createOnlineRoom() {
+      playUiClick();
+      cleanupOnlineSync();
+      app.mode = 'online';
+      app.myColor = 'red';
+      app.redName = studentProfile.fullLabel || '방장';
+      app.blueName = '참가자 대기 중';
+      const code = String(Math.floor(1000 + Math.random() * 9000));
+      app.roomCode = code;
+      app.connected = true;
+
+      state.status = 'RPS';
+      state.guestJoined = false;
+      state.rpsHost = null;
+      state.rpsGuest = null;
+
+      const lobbyStatusBox = document.getElementById('lobbyStatusBox');
+      lobbyStatusBox.classList.remove('hidden');
+      lobbyStatusBox.classList.add('flex');
+      document.getElementById('lobbyRoomCodeDisplay').textContent = code;
+      renderAll();
+
+      connectHybridP2PChannels(code, true);
+    }
+
+    function joinOnlineRoom() {
+      playUiClick();
+      const code = (document.getElementById('inpJoinCode').value || '').trim();
+      if (!/^\d{4}$/.test(code)) {
+        flagInputError(document.getElementById('inpJoinCode'));
+        showToast('⚠️ 4자리 숫자 방 번호를 정확히 입력해 주세요!');
+        return;
+      }
+
+      cleanupOnlineSync();
+      app.mode = 'online';
+      app.myColor = 'blue';
+      app.blueName = studentProfile.fullLabel || '참가 학생';
+      app.roomCode = code;
+      app.connected = true;
+      state.status = 'RPS';
+      state.guestJoined = true;
+      state.rpsHost = null;
+      state.rpsGuest = null;
+
+      openHubView('rps', true);
+      renderAll();
+      showToast(`🚀 [${code}]번 방에 입장했습니다! 가위바위보로 선공을 정하세요!`);
+
+      connectHybridP2PChannels(code, false);
+      setTimeout(() => {
+        sendP2PPacket({ type: 'GUEST_JOIN', guestName: app.blueName });
+      }, 350);
+    }
+
+    // =========================================================================
+    // 7. Full Animated Gameplay (650ms 3D Dice Tumble + Sequential Chip Placement)
+    // =========================================================================
+    function initNewGame(firstColor = null, fromRemote = false) {
+      clearTimers();
+      app.animatingBusy = false;
+      if (app.mode !== 'online') {
+        app.myColor = selPlayerColor.value;
+        app.aiColor = app.myColor === 'red' ? 'blue' : 'red';
+        app.redName = app.myColor === 'red' ? studentProfile.fullLabel : `AI (${DIFF_LABELS[app.difficulty]})`;
+        app.blueName = app.myColor === 'blue' ? studentProfile.fullLabel : `AI (${DIFF_LABELS[app.difficulty]})`;
+      }
+      const startTurn = firstColor || selFirstTurn.value || 'red';
+      state.status = 'PLAYING';
+      state.turnOwner = startTurn;
+      state.phase = 'ROLL';
+      state.dice = [null, null];
+      state.board = Array(12).fill(null);
+      state.winner = null;
+      state.winReason = null;
+      state.clockRed = TURN_CLOCK_TOTAL;
+      state.clockBlue = TURN_CLOCK_TOTAL;
+      state.previewNums = [];
+      state.manualSelectedNums.clear();
+      state.newlyPlacedPos.clear();
+      state.flippedPos.clear();
+      state.lastMove = {
+        by: startTurn,
+        nums: [],
+        passed: false,
+        seq: (state.lastMove?.seq || 0) + 1,
+        text: '새 게임이 시작되었습니다! 주사위를 굴려보세요.'
+      };
+
+      renderAll();
+      updateClockDisplay();
+      startTurnClock();
+
+      if (!fromRemote && app.mode === 'online' && app.roomCode) {
+        sendP2PPacket({ type: 'NEW_GAME', firstColor: startTurn });
+      }
+
+      if (app.mode === 'ai' && state.turnOwner === app.aiColor) {
+        scheduleAITurn();
+      }
+    }
+
+    function handleRollDice() {
+      if (state.status === 'FINISHED' || state.phase !== 'ROLL' || app.animatingBusy) return;
+      if (!isMyTurnNow()) {
+        showToast('⏳ 상대방의 차례입니다!');
+        return;
+      }
+
+      const d1 = Math.floor(Math.random() * 6) + 1;
+      const d2 = Math.floor(Math.random() * 6) + 1;
+
+      if (app.mode === 'online' && app.roomCode) {
+        sendP2PPacket({ type: 'ROLL_DICE', d1, d2 });
+      }
+      animateDiceRollToValues(d1, d2, false);
+    }
+
+    // Restored Full 650ms 3D Tumbling & Cycling Pip Animation
+    function animateDiceRollToValues(d1, d2, isRemoteOrAI = false, onComplete = null) {
+      app.animatingBusy = true;
+      btnRollDice.disabled = true;
+      playDiceRollSound();
+
+      die1El.classList.remove('dice-land-pop');
+      die2El.classList.remove('dice-land-pop');
+      die1El.classList.add('dice-tumble-3d');
+      die2El.classList.add('dice-tumble-3d');
+      diceSumText.textContent = '주사위 굴리는 중...';
+
+      const pipCycleInterval = setInterval(() => {
+        renderDieFace(die1El, Math.floor(Math.random() * 6) + 1);
+        renderDieFace(die2El, Math.floor(Math.random() * 6) + 1);
+      }, 70);
+
+      const finishTimer = setTimeout(() => {
+        clearInterval(pipCycleInterval);
+        die1El.classList.remove('dice-tumble-3d');
+        die2El.classList.remove('dice-tumble-3d');
+        die1El.classList.add('dice-land-pop');
+        die2El.classList.add('dice-land-pop');
+
+        playWoodImpact(0, 0.95);
+        state.dice = [d1, d2];
+        state.phase = 'PLACE';
+        state.manualSelectedNums.clear();
+        state.previewNums = [];
+        app.animatingBusy = false;
+
+        state.lastMove = {
+          by: state.turnOwner,
+          nums: [],
+          passed: false,
+          seq: (state.lastMove?.seq || 0) + 1,
+          text: `${state.turnOwner === 'red' ? '🔴' : '🔵'} 주사위 [${d1} + ${d2} = ${d1 + d2}]! 놓을 숫자 조합을 선택하세요.`
+        };
+
+        renderAll();
+        if (typeof onComplete === 'function') onComplete();
+      }, 640);
+
+      app.timers.push(finishTimer);
+    }
+
+    // Restored Sequential One-by-One Chip Placement & Dramatic 3D Opponent Chip Flipping
+    function executeSequentialComboPlacement(comboNums, fromRemote = false) {
+      if (state.status === 'FINISHED' || state.phase !== 'PLACE' || app.animatingBusy) return;
+
+      if (!fromRemote && app.mode === 'online' && app.roomCode) {
+        sendP2PPacket({ type: 'PLACE_COMBO', combo: comboNums });
+      }
+
+      app.animatingBusy = true;
+      const actorColor = state.turnOwner;
+      const nextColor = actorColor === 'red' ? 'blue' : 'red';
+      state.previewNums = [];
+      state.manualSelectedNums.clear();
+      state.newlyPlacedPos.clear();
+      state.flippedPos.clear();
+
+      let flippedCount = 0;
+
+      comboNums.forEach((num, idx) => {
+        const stepTimer = setTimeout(() => {
+          if (state.status === 'FINISHED') return; // 시간 초과 등으로 게임이 끝난 경우 중단
+          const pos = NUM_TO_POS[num];
+          const prevOwner = state.board[pos];
+          const isFlip = prevOwner !== null && prevOwner !== actorColor;
+          if (isFlip) flippedCount++;
+
+          state.board[pos] = actorColor;
+          state.newlyPlacedPos.clear();
+          state.flippedPos.clear();
+          if (isFlip) {
+            state.flippedPos.add(pos);
+          } else {
+            state.newlyPlacedPos.add(pos);
+          }
+
+          playChipSound(isFlip);
+          renderBoard();
+
+          // Clear single-shot animation markers after animation finishes so subsequent renders NEVER replay them
+          const clearAnimTimer = setTimeout(() => {
+            state.newlyPlacedPos.delete(pos);
+            state.flippedPos.delete(pos);
+          }, 520);
+          app.timers.push(clearAnimTimer);
+
+          // After the final chip in the combination is placed:
+          if (idx === comboNums.length - 1) {
+            const settleTimer = setTimeout(() => {
+              if (state.status === 'FINISHED') return; // 시간 초과 등으로 게임이 끝난 경우 중단
+              app.animatingBusy = false;
+              state.newlyPlacedPos.clear();
+              state.flippedPos.clear();
+              const wins = getWinningLines(state.board);
+              const myWins = wins.filter(w => w.color === actorColor);
+
+              if (myWins.length > 0) {
+                state.status = 'FINISHED';
+                state.winner = actorColor;
+                state.winReason = 'bingo';
+                state.lastMove = {
+                  by: actorColor,
+                  nums: comboNums,
+                  passed: false,
+                  seq: (state.lastMove?.seq || 0) + 1,
+                  text: `🎉 [${comboNums.join(', ')}] 배치 완료! 합 26 빙고 승리!`
+                };
+                renderAll();
+                const isPlayerVictory = app.mode === 'local' || actorColor === app.myColor;
+                playFanfare(isPlayerVictory);
+                launchVictoryConfetti();
+                return;
+              }
+
+              state.turnOwner = nextColor;
+              state.phase = 'ROLL';
+              state.dice = [null, null];
+              state.lastMove = {
+                by: actorColor,
+                nums: comboNums,
+                passed: false,
+                seq: (state.lastMove?.seq || 0) + 1,
+                text: `${actorColor === 'red' ? '🔴' : '🔵'} [${comboNums.join(' + ')}] 배치 완료${flippedCount > 0 ? ` (상대 칩 ${flippedCount}개 뒤집기!)` : ''}`
+              };
+
+              renderAll();
+
+              if (app.mode === 'ai' && state.turnOwner === app.aiColor) {
+                scheduleAITurn();
+              }
+            }, 340);
+            app.timers.push(settleTimer);
+          }
+        }, idx * 240);
+        app.timers.push(stepTimer);
+      });
+    }
+
+    function handlePassTurn(fromRemote = false) {
+      if (state.status === 'FINISHED' || state.phase !== 'PLACE' || app.animatingBusy) return;
+      playUiClick();
+      if (!fromRemote && app.mode === 'online' && app.roomCode) {
+        sendP2PPacket({ type: 'PASS_TURN' });
+      }
+      const prevColor = state.turnOwner;
+      state.turnOwner = prevColor === 'red' ? 'blue' : 'red';
+      state.phase = 'ROLL';
+      state.dice = [null, null];
+      state.manualSelectedNums.clear();
+      state.previewNums = [];
+      state.newlyPlacedPos.clear();
+      state.flippedPos.clear();
+      state.lastMove = {
+        by: prevColor,
+        nums: [],
+        passed: true,
+        seq: (state.lastMove?.seq || 0) + 1,
+        text: `${prevColor === 'red' ? '🔴' : '🔵'} 놓을 수 있는 조합이 없어 턴을 넘겼습니다.`
+      };
+
+      renderAll();
+
+      if (app.mode === 'ai' && state.turnOwner === app.aiColor) {
+        scheduleAITurn();
+      }
+    }
+
+    // =========================================================================
+    // 8. 4-Level AI Engine (Easy / Medium / Hard / Master 36-Sum Expectiminimax)
+    // =========================================================================
+    function scheduleAITurn() {
+      const t1 = setTimeout(() => {
+        if (app.mode !== 'ai' || state.status === 'FINISHED' || state.turnOwner !== app.aiColor) return;
+        const d1 = Math.floor(Math.random() * 6) + 1;
+        const d2 = Math.floor(Math.random() * 6) + 1;
+
+        animateDiceRollToValues(d1, d2, true, () => {
+          const t2 = setTimeout(() => {
+            if (app.mode !== 'ai' || state.status === 'FINISHED' || state.turnOwner !== app.aiColor) return;
+            const sum = d1 + d2;
+            const valid = getValidCombos(sum, app.aiColor, state.board);
+            if (valid.length === 0) {
+              handlePassTurn(true);
+              return;
+            }
+            const best = pickAICombo(valid, app.difficulty, app.aiColor, app.myColor);
+            setPreviewCombo(best);
+
+            const t3 = setTimeout(() => {
+              executeSequentialComboPlacement(best, true);
+            }, 420);
+            app.timers.push(t3);
+          }, 520);
+          app.timers.push(t2);
+        });
+      }, 550);
+      app.timers.push(t1);
+    }
+
+    function canColorWinWithSum(sum, color, boardArr) {
+      const combos = getValidCombos(sum, color, boardArr);
+      for (const combo of combos) {
+        for (const line of LINES) {
+          if (line.cells.every(pos => boardArr[pos] === color || combo.includes(NODES[pos].num))) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    function pickAICombo(validCombos, diff, aiCol, userCol) {
+      if (diff === 'easy') {
+        return validCombos[Math.floor(Math.random() * validCombos.length)];
+      }
+
+      const innerPositions = new Set([2, 3, 5, 6, 8, 9]);
+      let bestCombo = validCombos[0];
+      let bestScore = -Infinity;
+
+      for (const combo of validCombos) {
+        const sim = [...state.board];
+        let flips = 0;
+        let intersectScore = 0;
+        let highNumScore = 0;
+
+        combo.forEach(num => {
+          const pos = NUM_TO_POS[num];
+          if (sim[pos] === userCol) {
+            flips++;
+            if (innerPositions.has(pos)) intersectScore += 18;
+          }
+          if (innerPositions.has(pos)) intersectScore += 10;
+          if (num >= 10) highNumScore += (num - 8) * 12;
+          sim[pos] = aiCol;
+        });
+
+        if (LINES.some(l => l.cells.every(p => sim[p] === aiCol))) {
+          return combo;
+        }
+
+        let user3Threats = 0;
+        let ai3Lines = 0;
+        for (const l of LINES) {
+          const uCnt = l.cells.filter(p => sim[p] === userCol).length;
+          const aCnt = l.cells.filter(p => sim[p] === aiCol).length;
+          if (uCnt === 3) user3Threats++;
+          if (aCnt === 3) ai3Lines++;
+        }
+
+        let score = 0;
+        if (diff === 'medium') {
+          score = -user3Threats * 1600 + ai3Lines * 260 + flips * 45 + Math.random() * 15;
+        } else if (diff === 'hard') {
+          score = -user3Threats * 3000 + ai3Lines * 480 + flips * 120 + intersectScore * 8 + highNumScore;
+        } else {
+          let userWinWays = 0;
+          let aiWinWays = 0;
+          for (let s = 2; s <= 12; s++) {
+            const w = DICE_WEIGHTS[s];
+            if (canColorWinWithSum(s, userCol, sim)) userWinWays += w;
+            if (canColorWinWithSum(s, aiCol, sim)) aiWinWays += w;
+          }
+          score = -userWinWays * 6500 + aiWinWays * 550 - user3Threats * 2200 + ai3Lines * 400 + intersectScore * 14 + highNumScore * 3 + flips * 150;
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestCombo = combo;
+        }
+      }
+      return bestCombo;
+    }
+
+    // =========================================================================
+    // 9. Focused Visual Hierarchy & Board Rendering
+    // =========================================================================
+    function renderAll() {
+      selDifficulty.value = app.difficulty;
+      studentProfileBadge.textContent = `🎓 ${studentProfile.fullLabel}`;
+
+      if (app.mode === 'ai') {
+        modeHeaderBadge.textContent = `🤖 AI 대전 (${DIFF_LABELS[app.difficulty]})`;
+        roomCodeHeaderBadge.classList.add('hidden');
+        btnForceSync.classList.add('hidden');
+      } else if (app.mode === 'local') {
+        modeHeaderBadge.textContent = '👥 한 기기 2인 짝꿍 대전';
+        roomCodeHeaderBadge.classList.add('hidden');
+        btnForceSync.classList.add('hidden');
+      } else {
+        modeHeaderBadge.textContent = `🌐 온라인 1:1 (${app.myColor === 'red' ? '방장·🔴빨강' : '참가자·🔵파랑'})`;
+        roomCodeHeaderBadge.textContent = `방 번호: ${app.roomCode || '----'}`;
+        roomCodeHeaderBadge.classList.remove('hidden');
+        btnForceSync.classList.remove('hidden');
+      }
+
+      const redCnt = state.board.filter(c => c === 'red').length;
+      const blueCnt = state.board.filter(c => c === 'blue').length;
+      countRedChips.textContent = `${redCnt}개`;
+      countBlueChips.textContent = `${blueCnt}개`;
+
+      if (app.mode === 'ai') {
+        labelRed.textContent = app.myColor === 'red' ? `🔴 ${studentProfile.fullLabel}` : `🔴 AI (${DIFF_LABELS[app.difficulty]})`;
+        labelBlue.textContent = app.myColor === 'blue' ? `🔵 ${studentProfile.fullLabel}` : `🔵 AI (${DIFF_LABELS[app.difficulty]})`;
+      } else if (app.mode === 'local') {
+        labelRed.textContent = `🔴 ${studentProfile.fullLabel} (빨강)`;
+        labelBlue.textContent = '🔵 짝꿍 학생 2 (파랑)';
+      } else {
+        labelRed.textContent = `🔴 ${app.redName}${app.myColor === 'red' ? ' (나)' : ''}`;
+        labelBlue.textContent = `🔵 ${app.blueName}${app.myColor === 'blue' ? ' (나)' : ''}`;
+      }
+
+      const redTurn = state.status !== 'FINISHED' && state.turnOwner === 'red';
+      const blueTurn = state.status !== 'FINISHED' && state.turnOwner === 'blue';
+      badgeRed.className = `flex items-center gap-1.5 px-3 py-1 rounded-xl border-2 font-bold text-xs sm:text-sm transition ${
+        redTurn ? 'bg-slate-900 border-slate-900 text-white shadow-xs' : 'bg-white border-slate-200 text-slate-500'
+      }`;
+      badgeBlue.className = `flex items-center gap-1.5 px-3 py-1 rounded-xl border-2 font-bold text-xs sm:text-sm transition ${
+        blueTurn ? 'bg-slate-900 border-slate-900 text-white shadow-xs' : 'bg-white border-slate-200 text-slate-500'
+      }`;
+
+      lastMoveBanner.textContent = `📢 ${state.lastMove?.text || '주사위를 굴려 게임을 진행하세요!'}`;
+
+      // Dynamic Action Spotlight Logic
+      const myTurn = isMyTurnNow();
+      const sum = state.dice[0] && state.dice[1] ? state.dice[0] + state.dice[1] : null;
+      const validCombos = sum ? getValidCombos(sum, state.turnOwner, state.board) : [];
+
+      if (state.status === 'FINISHED') {
+        const winLabel = state.winner === 'red' ? labelRed.textContent : labelBlue.textContent;
+        statusBanner.className = 'w-full py-3 px-4 rounded-2xl text-center font-black text-sm sm:text-base bg-indigo-600 text-white shadow-md';
+        statusBanner.textContent = state.winReason === 'timeout'
+          ? `⏰ 시간 초과! ${winLabel} 님이 승리했습니다! (패배한 플레이어의 남은 시간이 모두 소진됨)`
+          : `🎉 빙고 완성! ${winLabel} 님이 합 26 한 줄(4칸)을 완성해 승리했습니다!`;
+      } else if (!myTurn) {
+        statusBanner.className = 'w-full py-2.5 px-3.5 rounded-2xl text-center font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 border border-slate-200';
+        statusBanner.textContent = state.phase === 'ROLL'
+          ? '⏳ 상대방 차례입니다. 상대방이 주사위를 굴리고 있습니다...'
+          : `⏳ 상대방이 주사위 합 [${sum}]의 숫자를 고르고 있습니다...`;
+      } else {
+        statusBanner.className = 'w-full py-2.5 px-3.5 rounded-2xl text-center font-extrabold text-xs sm:text-sm bg-indigo-50 text-indigo-950 border border-indigo-200';
+        statusBanner.textContent = state.phase === 'ROLL'
+          ? '🙋 STEP 1: 오른쪽 [🎲 주사위 굴리기] 버튼을 눌러 주사위를 던지세요!'
+          : `🎯 STEP 2: 주사위 합 [${sum}]! 아래 강조된 영역에서 놓을 숫자를 선택하세요!`;
+      }
+
+      if (!app.animatingBusy) {
+        renderDieFace(die1El, state.dice[0]);
+        renderDieFace(die2El, state.dice[1]);
+        diceSumText.textContent = sum ? `합계: ${sum} (${state.dice[0]} + ${state.dice[1]})` : '굴리기 전';
+      }
+
+      // Spotlight 1: Roll Dice Button (Active ONLY when myTurn && phase === 'ROLL')
+      const canRoll = myTurn && state.phase === 'ROLL' && state.status !== 'FINISHED';
+      btnRollDice.disabled = !canRoll;
+      rollGuideBadge.classList.toggle('hidden', !canRoll);
+      btnRollDice.className = canRoll
+        ? 'cta-spotlight px-5 py-3 rounded-2xl font-black text-sm sm:text-base transition cursor-pointer flex items-center gap-1.5'
+        : 'px-5 py-3 rounded-2xl font-bold text-sm sm:text-base bg-slate-200 text-slate-400 cursor-not-allowed flex items-center gap-1.5';
+
+      const canPass = myTurn && state.phase === 'PLACE' && validCombos.length === 0;
+      btnPassTurn.classList.toggle('hidden', !canPass);
+
+      // Spotlight 2: Combination Selection Box (Active ONLY when myTurn && phase === 'PLACE')
+      const isChoosingPhase = myTurn && state.phase === 'PLACE' && state.status !== 'FINISHED' && validCombos.length > 0;
+      comboSpotlightWrapper.className = isChoosingPhase
+        ? 'combo-area-spotlight rounded-2xl p-3.5 flex flex-col gap-2 transition-all'
+        : 'border border-slate-200 bg-white rounded-2xl p-3 flex flex-col gap-2 transition-all';
+
+      comboGuideHeader.classList.toggle('hidden', !isChoosingPhase);
+      comboGuideHeader.classList.toggle('flex', isChoosingPhase);
+
+      const isManual = selInputMode.value === 'manual';
+      if (isChoosingPhase) {
+        comboGuideText.textContent = isManual
+          ? '👇 보드판에서 숫자를 직접 클릭해 합을 맞춘 뒤 [✅ 선택한 숫자 놓기]를 누르세요!'
+          : '👇 아래 파란색 조합 버튼 중 하나를 골라 클릭하세요!';
+      }
+
+      manualControlsRow.classList.toggle('hidden', !(isChoosingPhase && isManual));
+      manualControlsRow.classList.toggle('flex', isChoosingPhase && isManual);
+
+      comboContainer.innerHTML = '';
+      if (state.phase === 'ROLL') {
+        comboContainer.innerHTML = `<span class="text-xs text-slate-400 font-medium">${
+          myTurn ? '먼저 [🎲 주사위 굴리기] 버튼을 눌러주세요.' : '상대방이 주사위를 굴리는 중입니다.'
+        }</span>`;
+      } else if (!myTurn) {
+        comboContainer.innerHTML = `<span class="text-xs text-slate-500 font-bold">상대방이 조합을 선택하고 있습니다...</span>`;
+      } else if (validCombos.length === 0) {
+        comboContainer.innerHTML = `<span class="text-xs text-rose-600 font-bold">놓을 수 있는 숫자 조합이 없습니다. 우측 [⏭️ 패스] 버튼을 눌러주세요.</span>`;
+      } else if (isManual) {
+        const selArr = Array.from(state.manualSelectedNums).sort((a, b) => a - b);
+        const selSum = selArr.reduce((a, b) => a + b, 0);
+        const exact = selSum === sum && selArr.length >= 1 && selArr.length <= 3;
+        manualSumInfo.textContent = `선택한 숫자: ${selArr.length ? selArr.map(n => `[${n}]`).join(' + ') : '없음'} (현재 합: ${selSum} / 목표: ${sum})`;
+        btnConfirmManual.disabled = !exact;
+        btnConfirmManual.className = exact
+          ? 'cta-spotlight px-4 py-2 rounded-xl font-black text-xs cursor-pointer'
+          : 'px-4 py-2 rounded-xl font-bold text-xs bg-slate-200 text-slate-400 cursor-not-allowed';
+      } else {
+        const oppColor = state.turnOwner === 'red' ? 'blue' : 'red';
+        validCombos.forEach(combo => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const flips = combo.filter(n => state.board[NUM_TO_POS[n]] === oppColor).length;
+          const txt = combo.length === 1 ? `모으기 [${combo[0]}]` : `가르기 [${combo.join(' + ')}]`;
+          btn.className = flips > 0
+            ? 'px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white border-2 border-indigo-700 font-black text-xs shadow-sm transition cursor-pointer flex items-center gap-1.5 active:scale-95'
+            : 'px-3 py-1.5 rounded-xl bg-white hover:bg-indigo-600 hover:text-white text-indigo-950 border-2 border-indigo-400 font-extrabold text-xs shadow-2xs transition cursor-pointer flex items-center gap-1.5 active:scale-95';
+          btn.innerHTML = `<span>${txt}</span>${
+            flips > 0 ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-amber-300 text-slate-950 font-black">🔄상대칩 뒤집기 ${flips}</span>` : ''
+          }`;
+          btn.addEventListener('mouseenter', () => setPreviewCombo(combo));
+          btn.addEventListener('mouseleave', () => setPreviewCombo([]));
+          btn.addEventListener('click', () => executeSequentialComboPlacement(combo, false));
+          comboContainer.appendChild(btn);
+        });
+      }
+
+      updateClockDisplay();
+      renderBoard();
+    }
+
+    // Updates preview ring classes in-place WITHOUT recreating board DOM or re-triggering chip animations
+    function setPreviewCombo(nums) {
+      state.previewNums = nums || [];
+      const activeSet = new Set([...state.previewNums, ...Array.from(state.manualSelectedNums)]);
+      nodesLayer.querySelectorAll('button[data-node-num]').forEach(btn => {
+        const num = Number(btn.getAttribute('data-node-num'));
+        const isEmpty = btn.getAttribute('data-empty') === '1';
+        const isPrev = activeSet.has(num);
+        btn.classList.toggle('ring-4', isPrev);
+        btn.classList.toggle('ring-indigo-600', isPrev);
+        btn.classList.toggle('scale-110', isPrev);
+        if (isEmpty) {
+          btn.classList.toggle('bg-indigo-50', isPrev);
+        }
+      });
+    }
+
+    function renderBoard() {
+      const wins = getWinningLines(state.board);
+      const winLineIds = new Set(wins.map(w => w.idx));
+      const winningPositions = new Set();
+      wins.forEach(w => LINES[w.idx].cells.forEach(c => winningPositions.add(c)));
+
+      // 1. Hexagram SVG Lines (Golden Bingo Glow underneath the Permanent Black Lines)
+      const bingoGroup = document.getElementById('boardBingoLines');
+      if (bingoGroup) {
+        let bingoSvg = '';
+        LINES.forEach((line, idx) => {
+          if (winLineIds.has(idx)) {
+            const nStart = NODES[line.cells[0]];
+            const nEnd = NODES[line.cells[3]];
+            bingoSvg += `<line x1="${nStart.x}" y1="${nStart.y}" x2="${nEnd.x}" y2="${nEnd.y}" stroke="#facc15" stroke-width="6.5" stroke-linecap="round" opacity="0.85" />`;
+          }
+        });
+        bingoGroup.innerHTML = bingoSvg;
+      }
+
+      // 2. Non-wrapping Symmetrical Line Bingo Badges
+      lineHintsLayer.innerHTML = '';
+      if (chkLineStatus.checked) {
+        LINES.forEach(line => {
+          const rCnt = line.cells.filter(p => state.board[p] === 'red').length;
+          const bCnt = line.cells.filter(p => state.board[p] === 'blue').length;
+          const isBingo = rCnt === 4 || bCnt === 4;
+          const isThreat = !isBingo && (rCnt === 3 || bCnt === 3);
+
+          const badge = document.createElement('div');
+          badge.style.left = `${line.hintX}%`;
+          badge.style.top = `${line.hintY}%`;
+
+          let colorCls = 'bg-stone-800/90 text-amber-50 border-stone-600';
+          if (isBingo) {
+            colorCls = 'bg-amber-400 text-slate-950 border-amber-700 scale-110 shadow-md';
+          } else if (isThreat) {
+            colorCls = 'bg-indigo-950/95 text-amber-300 border-amber-400';
+          }
+
+          badge.className = `line-badge absolute border text-[10px] sm:text-xs font-black ${colorCls}`;
+          badge.textContent = isBingo
+            ? '⭐ 26 빙고!'
+            : `${line.arrow} 🔴 ${rCnt} · 🔵 ${bCnt}`;
+          lineHintsLayer.appendChild(badge);
+        });
+      }
+
+      // 3. 12 Enlarged Circular Slots & Yellow Chips with Drop/Flip/Ripple Animations
+      nodesLayer.innerHTML = '';
+      const myTurn = isMyTurnNow();
+      const canClickBoard = myTurn && state.phase === 'PLACE' && selInputMode.value === 'manual';
+
+      NODES.forEach(node => {
+        const owner = state.board[node.pos];
+        const isPrev = state.previewNums.includes(node.num) || state.manualSelectedNums.has(node.num);
+        const isNewDrop = state.newlyPlacedPos.has(node.pos);
+        const isFlipped = state.flippedPos.has(node.pos);
+        const isWinCell = winningPositions.has(node.pos);
+        const ul = node.num === 6 || node.num === 9 ? 'num-underline' : '';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('data-node-num', String(node.num));
+        btn.setAttribute('data-empty', owner ? '0' : '1');
+        btn.style.left = `${node.x}%`;
+        btn.style.top = `${node.y}%`;
+
+        if (!owner) {
+          btn.className = `board-slot-printed absolute -translate-x-1/2 -translate-y-1/2 w-[12.2%] h-[12.2%] rounded-full flex items-center justify-center ${
+            isPrev ? 'ring-4 ring-indigo-600 scale-110 bg-indigo-50' : ''
+          } ${canClickBoard ? 'cursor-pointer hover:scale-108 ring-2 ring-indigo-400/60' : 'cursor-default'}`;
+          btn.innerHTML = `<span class="text-base sm:text-2xl font-black text-stone-800 ${ul}">${node.num}</span>`;
+        } else {
+          const isRed = owner === 'red';
+          const animClass = isWinCell
+            ? 'bingo-chip-celebrate'
+            : isFlipped
+            ? 'chip-flip-3d'
+            : isNewDrop
+            ? 'chip-place-drop'
+            : '';
+
+          btn.className = `yellow-chip absolute -translate-x-1/2 -translate-y-1/2 w-[12.8%] h-[12.8%] rounded-full flex flex-col items-center justify-center ${animClass} ${
+            isPrev ? 'ring-4 ring-indigo-600 scale-110' : ''
+          } ${canClickBoard && owner !== state.turnOwner ? 'cursor-pointer hover:scale-108 ring-2 ring-amber-400' : 'cursor-default'}`;
+
+          const rippleHtml = (isNewDrop || isFlipped)
+            ? `<span class="slot-ripple-ring ${isFlipped ? 'slot-ripple-flip' : ''}"></span>`
+            : '';
+
+          btn.innerHTML = `
+            ${rippleHtml}
+            <span class="text-base sm:text-2xl font-black leading-none ${isRed ? 'text-red-600' : 'text-blue-600'} ${ul}">${node.num}</span>
+            <span class="absolute -bottom-1.5 px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black leading-none shadow-2xs ${isRed ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}">${isRed ? '빨강' : '파랑'}</span>
+          `;
+        }
+
+        if (canClickBoard && owner !== state.turnOwner) {
+          btn.addEventListener('click', () => {
+            playUiClick();
+            if (state.manualSelectedNums.has(node.num)) state.manualSelectedNums.delete(node.num);
+            else if (state.manualSelectedNums.size < 3) state.manualSelectedNums.add(node.num);
+            renderAll();
+          });
+        }
+        nodesLayer.appendChild(btn);
+      });
+    }
+
+    // =========================================================================
+    // 10. Modals & Full 3-Beat Rhythmic Rock-Paper-Scissors Animation
+    // =========================================================================
+    const hubModal = document.getElementById('hubModal');
+    const viewModeSelect = document.getElementById('viewModeSelect');
+    const viewOnlineLobby = document.getElementById('viewOnlineLobby');
+    const viewRps = document.getElementById('viewRps');
+    const viewDifficulty = document.getElementById('viewDifficulty');
+    const rpsRedHand = document.getElementById('rpsRedHand');
+    const rpsBlueHand = document.getElementById('rpsBlueHand');
+    const rpsRedChoiceText = document.getElementById('rpsRedChoiceText');
+    const rpsBlueChoiceText = document.getElementById('rpsBlueChoiceText');
+    const rpsResultBanner = document.getElementById('rpsResultBanner');
+    const rpsChoiceButtons = document.getElementById('rpsChoiceButtons');
+    const btnAfterRpsNext = document.getElementById('btnAfterRpsNext');
+
+    const RPS_MAP = {
+      scissors: { emoji: '✌️', name: '가위', beats: 'paper' },
+      rock:     { emoji: '✊', name: '바위', beats: 'scissors' },
+      paper:    { emoji: '🖐️', name: '보',   beats: 'rock' }
+    };
+    let rpsBusy = false;
+    let pendingFirstColor = 'red';
+
+    function closeHubModal() {
+      hubModal.classList.add('hidden');
+      hubModal.classList.remove('flex');
+    }
+
+    function openHubView(view, fromRemote = false) {
+      [viewModeSelect, viewOnlineLobby, viewRps, viewDifficulty].forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+      });
+
+      if (view === 'mode') {
+        viewModeSelect.classList.remove('hidden');
+        viewModeSelect.classList.add('flex');
+      } else if (view === 'lobby') {
+        document.getElementById('lobbyStatusBox').classList.add('hidden');
+        document.getElementById('lobbyStatusBox').classList.remove('flex');
+        viewOnlineLobby.classList.remove('hidden');
+        viewOnlineLobby.classList.add('flex');
+      } else if (view === 'rps') {
+        rpsBusy = false;
+        state.rpsHost = null;
+        state.rpsGuest = null;
+        rpsRedHand.textContent = '✊';
+        rpsBlueHand.textContent = '✊';
+        rpsRedHand.classList.remove('rps-hand-bounce');
+        rpsBlueHand.classList.remove('rps-hand-bounce');
+        rpsRedChoiceText.textContent = '선택 대기';
+        rpsBlueChoiceText.textContent = '선택 대기';
+        rpsChoiceButtons.classList.remove('hidden');
+        btnAfterRpsNext.classList.add('hidden');
+        const rpsArenaBox = document.getElementById('rpsArenaBox');
+        if (rpsArenaBox) {
+          rpsArenaBox.className = 'w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+        }
+        rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-slate-100 text-[#22252A] font-black text-sm sm:text-base transition-colors duration-300';
+        rpsResultBanner.textContent = '아래에서 가위, 바위, 보 중 하나를 선택하세요!';
+        if (!fromRemote && app.mode === 'online' && app.roomCode) {
+          sendP2PPacket({ type: 'OPEN_RPS' });
+        }
+        viewRps.classList.remove('hidden');
+        viewRps.classList.add('flex');
+      } else if (view === 'difficulty') {
+        viewDifficulty.classList.remove('hidden');
+        viewDifficulty.classList.add('flex');
+      }
+
+      hubModal.classList.remove('hidden');
+      hubModal.classList.add('flex');
+    }
+
+    // Restored Full 3-Beat Rhythmic Hand-Shaking RPS Animation ("가위... 바위... 보!")
+    function playThreeBeatRpsReveal(redPick, bluePick, onComplete) {
+      rpsBusy = true;
+      rpsRedHand.textContent = '✊';
+      rpsBlueHand.textContent = '✊';
+      rpsRedHand.classList.add('rps-hand-bounce');
+      rpsBlueHand.classList.add('rps-hand-bounce');
+      rpsRedChoiceText.textContent = '흔드는 중...';
+      rpsBlueChoiceText.textContent = '흔드는 중...';
+
+      const chants = ['✌️ 가위...', '✊ 바위...', '🖐️ 보!'];
+      chants.forEach((chant, idx) => {
+        setTimeout(() => {
+          playRpsBeat(idx);
+          rpsResultBanner.className = 'w-full py-2.5 px-3 rounded-xl bg-indigo-50 text-indigo-900 font-black text-sm sm:text-base';
+          rpsResultBanner.textContent = chant;
+        }, idx * 310);
+      });
+
+      setTimeout(() => {
+        rpsRedHand.classList.remove('rps-hand-bounce');
+        rpsBlueHand.classList.remove('rps-hand-bounce');
+        rpsRedHand.textContent = RPS_MAP[redPick].emoji;
+        rpsBlueHand.textContent = RPS_MAP[bluePick].emoji;
+        rpsRedChoiceText.textContent = RPS_MAP[redPick].name;
+        rpsBlueChoiceText.textContent = RPS_MAP[bluePick].name;
+        onComplete();
+      }, 960);
+    }
+
+    function handleRpsClick(pick) {
+      if (rpsBusy) return;
+      const rpsArenaBox = document.getElementById('rpsArenaBox');
+
+      if (app.mode === 'ai' || app.mode === 'local') {
+        const keys = ['scissors', 'rock', 'paper'];
+        const oppPick = keys[Math.floor(Math.random() * 3)];
+
+        playThreeBeatRpsReveal(pick, oppPick, () => {
+          if (pick === oppPick) {
+            rpsBusy = false;
+            playTone({ freq: 360, endFreq: 420, duration: 0.2 });
+            if (rpsArenaBox) {
+              rpsArenaBox.className = 'w-full bg-[#FEF3C7] border-2 border-[#F59E0B] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+            }
+            rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#D97706] text-white font-black text-sm sm:text-base shadow-sm';
+            rpsResultBanner.textContent = `😮 둘 다 [${RPS_MAP[pick].name}]로 비겼습니다! 다시 선택하세요!`;
+            return;
+          }
+
+          const myWin = RPS_MAP[pick].beats === oppPick;
+          pendingFirstColor = myWin ? app.myColor : (app.myColor === 'red' ? 'blue' : 'red');
+          selFirstTurn.value = pendingFirstColor;
+          playFanfare(myWin);
+
+          if (myWin) {
+            if (rpsArenaBox) {
+              rpsArenaBox.className = 'w-full bg-[#DCFCE7] border-2 border-[#22C55E] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+            }
+            rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#12805C] text-white font-black text-sm sm:text-base shadow-md';
+            rpsResultBanner.textContent = '🎉 가위바위보 승리! 내가 먼저 시작합니다!';
+          } else {
+            if (rpsArenaBox) {
+              rpsArenaBox.className = 'w-full bg-[#FEE2E2] border-2 border-[#EF4444] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+            }
+            rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#D7373F] text-white font-black text-sm sm:text-base shadow-md';
+            rpsResultBanner.textContent = '🚨 가위바위보 패배! 상대가 이겨 먼저 시작합니다!';
+          }
+
+          if (app.mode === 'ai') {
+            rpsChoiceButtons.classList.add('hidden');
+            btnAfterRpsNext.classList.remove('hidden');
+            btnAfterRpsNext.onclick = () => { playUiClick(); openHubView('difficulty'); };
+          } else {
+            setTimeout(() => { closeHubModal(); initNewGame(pendingFirstColor, true); }, 1200);
+          }
+        });
+        return;
+      }
+
+      // Online 1:1 RPS
+      playUiClick();
+      if (app.myColor === 'red') {
+        state.rpsHost = pick;
+      } else {
+        state.rpsGuest = pick;
+      }
+      sendP2PPacket({ type: 'RPS_PICK', color: app.myColor, pick });
+      updateOnlineRpsUI();
+      checkOnlineRpsResolution();
+    }
+
+    function updateOnlineRpsUI() {
+      rpsRedChoiceText.textContent = state.rpsHost ? '✅ 선택 완료' : '선택 대기';
+      rpsBlueChoiceText.textContent = state.rpsGuest ? '✅ 선택 완료' : '선택 대기';
+    }
+
+    function checkOnlineRpsResolution() {
+      if (!state.rpsHost || !state.rpsGuest || rpsBusy) return;
+      const h = state.rpsHost;
+      const g = state.rpsGuest;
+      const rpsArenaBox = document.getElementById('rpsArenaBox');
+
+      playThreeBeatRpsReveal(h, g, () => {
+        if (h === g) {
+          if (rpsArenaBox) {
+            rpsArenaBox.className = 'w-full bg-[#FEF3C7] border-2 border-[#F59E0B] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+          }
+          rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#D97706] text-white font-black text-sm sm:text-base shadow-sm';
+          rpsResultBanner.textContent = `😮 둘 다 [${RPS_MAP[h].name}]로 비겼습니다! 다시 선택하세요!`;
+          setTimeout(() => {
+            rpsBusy = false;
+            state.rpsHost = null;
+            state.rpsGuest = null;
+            if (rpsArenaBox) {
+              rpsArenaBox.className = 'w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+            }
+            updateOnlineRpsUI();
+          }, 1100);
+          return;
+        }
+
+        const redWon = RPS_MAP[h].beats === g;
+        const winColor = redWon ? 'red' : 'blue';
+        const didIWin = winColor === app.myColor;
+        playFanfare(didIWin);
+
+        if (didIWin) {
+          if (rpsArenaBox) {
+            rpsArenaBox.className = 'w-full bg-[#DCFCE7] border-2 border-[#22C55E] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+          }
+          rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#12805C] text-white font-black text-sm sm:text-base shadow-md';
+          rpsResultBanner.textContent = `🎉 가위바위보 승리! (${winColor === 'red' ? app.redName : app.blueName} 선공)`;
+        } else {
+          if (rpsArenaBox) {
+            rpsArenaBox.className = 'w-full bg-[#FEE2E2] border-2 border-[#EF4444] rounded-2xl p-4 sm:p-5 flex items-center justify-around transition-colors duration-300';
+          }
+          rpsResultBanner.className = 'w-full py-3 px-4 rounded-2xl bg-[#D7373F] text-white font-black text-sm sm:text-base shadow-md';
+          rpsResultBanner.textContent = `🚨 가위바위보 패배! (${winColor === 'red' ? app.redName : app.blueName} 선공)`;
+        }
+
+        setTimeout(() => {
+          closeHubModal();
+          initNewGame(winColor, true);
+        }, 1300);
+      });
+    }
+
+    // =========================================================================
+    // 11. Event Listeners & Startup
+    // =========================================================================
+    // Welcome -> Login -> Game Listeners
+    document.getElementById('btnWelcomeStart').addEventListener('click', () => {
+      playUiClick();
+      navigateIntroRoute('#/login');
+    });
+    document.getElementById('btnBackToWelcome').addEventListener('click', () => {
+      playUiClick();
+      navigateIntroRoute('#/welcome');
+    });
+    document.getElementById('btnSubmitLogin').addEventListener('click', handleLoginSubmit);
+    loginNickname.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLoginSubmit();
+    });
+    document.getElementById('btnEditProfile').addEventListener('click', () => {
+      playUiClick();
+      navigateIntroRoute('#/login');
+    });
+
+    btnRollDice.addEventListener('click', handleRollDice);
+    btnPassTurn.addEventListener('click', () => handlePassTurn(false));
+    btnForceSync.addEventListener('click', () => {
+      playUiClick();
+      sendP2PPacket({ type: 'REQUEST_SYNC' });
+      showToast('⚡ 상대 기기와 턴 상태를 동기화했습니다.');
+    });
+
+    document.getElementById('btnOpenModeModal').addEventListener('click', () => { playUiClick(); openHubView('mode'); });
+    document.getElementById('btnOpenDifficulty').addEventListener('click', () => { playUiClick(); openHubView('difficulty'); });
+    document.getElementById('btnRps').addEventListener('click', () => { playUiClick(); openHubView('rps'); });
+    document.getElementById('btnCloseHubModal').addEventListener('click', () => { playUiClick(); closeHubModal(); });
+
+    document.getElementById('cardModeAI').addEventListener('click', () => {
+      playUiClick(); cleanupOnlineSync(); app.mode = 'ai'; openHubView('rps');
+    });
+    document.getElementById('cardModeOnline').addEventListener('click', () => {
+      playUiClick(); cleanupOnlineSync(); app.mode = 'online'; openHubView('lobby');
+    });
+    document.getElementById('cardModeLocal2P').addEventListener('click', () => {
+      playUiClick(); cleanupOnlineSync(); app.mode = 'local'; openHubView('rps');
+    });
+
+    document.getElementById('btnCreateRoom').addEventListener('click', createOnlineRoom);
+    document.getElementById('btnJoinRoom').addEventListener('click', joinOnlineRoom);
+    document.getElementById('btnHostStartNow').addEventListener('click', () => {
+      playUiClick();
+      app.connected = true;
+      state.guestJoined = true;
+      openHubView('rps', false);
+    });
+    document.getElementById('btnBackFromLobby').addEventListener('click', () => { playUiClick(); openHubView('mode'); });
+    document.getElementById('btnCopyCode').addEventListener('click', () => {
+      if (!app.roomCode) return;
+      const inp = document.createElement('input');
+      inp.value = app.roomCode;
+      document.body.appendChild(inp);
+      inp.select();
+      document.execCommand('copy');
+      document.body.removeChild(inp);
+      showToast(`📋 방 번호 [${app.roomCode}] 복사 완료!`);
+    });
+
+    document.querySelectorAll('.rps-btn').forEach(btn => {
+      btn.addEventListener('click', () => handleRpsClick(btn.getAttribute('data-rps')));
+    });
+
+    document.querySelectorAll('.diff-card-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        playUiClick();
+        app.difficulty = btn.getAttribute('data-diff');
+        selDifficulty.value = app.difficulty;
+        closeHubModal();
+        initNewGame(pendingFirstColor, true);
+      });
+    });
+
+    document.getElementById('btnSoundToggle').addEventListener('click', (e) => {
+      soundEnabled = !soundEnabled;
+      e.currentTarget.textContent = soundEnabled ? '🔊 효과음 켜짐' : '🔇 효과음 꺼짐';
+      if (soundEnabled) playUiClick();
+    });
+
+    btnResetManual.addEventListener('click', () => {
+      playUiClick(); state.manualSelectedNums.clear(); renderAll();
+    });
+    btnConfirmManual.addEventListener('click', () => {
+      const arr = Array.from(state.manualSelectedNums).sort((a, b) => a - b);
+      const sum = state.dice[0] + state.dice[1];
+      if (arr.reduce((a, b) => a + b, 0) === sum) executeSequentialComboPlacement(arr, false);
+    });
+
+    document.getElementById('btnNewGame').addEventListener('click', () => {
+      playUiClick(); initNewGame(selFirstTurn.value, false);
+    });
+
+    selDifficulty.addEventListener('change', () => { app.difficulty = selDifficulty.value; renderAll(); });
+    selInputMode.addEventListener('change', () => { state.manualSelectedNums.clear(); renderAll(); });
+    selPlayerColor.addEventListener('change', () => {
+      if (app.mode !== 'online') initNewGame(selFirstTurn.value, true);
+    });
+    selFirstTurn.addEventListener('change', () => {
+      if (app.mode !== 'online') initNewGame(selFirstTurn.value, true);
+    });
+    chkLineStatus.addEventListener('change', renderBoard);
+
+    const rulesModal = document.getElementById('rulesModal');
+    document.getElementById('btnRules').addEventListener('click', () => {
+      playUiClick(); rulesModal.classList.remove('hidden'); rulesModal.classList.add('flex');
+    });
+    const closeRules = () => { rulesModal.classList.add('hidden'); rulesModal.classList.remove('flex'); };
+    document.getElementById('btnCloseRules').addEventListener('click', closeRules);
+    document.getElementById('btnConfirmRules').addEventListener('click', closeRules);
+
+    window.onload = () => {
+      initThreeWelcomeScene();
+      initNewGame('red', true);
+      navigateIntroRoute('#/welcome');
+    };
+  </script>
+</body>
+</html>
